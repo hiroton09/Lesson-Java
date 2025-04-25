@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.todolist.repository.TaskRepository">
+
+	<!-- **************** 一覧全件検索 **************** -->
+	<resultMap id="taskList" type="com.example.todolist.entity.TaskSummary">
+		<id			property="taskId"		column="task_id"/>
+		<result		property="taskContents"	column="task_contents"/>
+		<result		property="createdAt"	column="created_at"/>
+		<result		property="updatedAt"	column="updated_at"/>
+		<association property="status" javaType="com.example.todolist.entity.Status">
+			<id			property="statusId"		column="status_id"/>
+			<result		property="statusName"	column="status_name"/>
+			<result		property="createdAt"	column="created_at"/>
+			<result		property="updatedAt"	column="updated_at"/>
+		</association>
+	</resultMap>
+	<!-- 一覧検索 -->
+	<select id="selectListAll"
+			resultMap="taskList">
+		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
+		  FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
+	  ORDER BY tt.task_id
+	</select>
+	
+</mapper>

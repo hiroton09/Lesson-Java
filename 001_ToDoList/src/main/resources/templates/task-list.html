@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク一覧</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- ------------検索---------------- -->
+<h2>タスク検索</h2>
+
+<form th:action="@{/task-search-list}" method="POST">
+   	<input type="submit" value="検索" class="btn">
+</form>
+
+<!-- ------------一覧---------------- -->
+<div th:if="${taskSummaryList} != null">
+	<h2>タスク一覧</h2>
+
+	<table class="task-list">
+		<tr>
+			<th>タスクID</th>
+			<th>タスク内容</th>
+			<th>ステータス</th>
+			<th>作成日</th>
+			<th>更新日</th>
+		</tr>
+		<tr th:each="task : ${taskSummaryList}">
+			<td th:text="${task.taskId}"></td>
+			<td th:text="${task.taskContents}"></td>
+			<td th:text="${task.status.statusId + '：' + task.status.statusName}"></td>
+			<td th:text="${task.createdAt}"></td>
+			<td th:text="${task.updatedAt}"></td>
+		</tr>
+
+	</table>
+</div>
+
+</body>
+</html>
