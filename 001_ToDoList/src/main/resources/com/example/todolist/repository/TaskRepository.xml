@@ -11,8 +11,6 @@
 		<association property="status" javaType="com.example.todolist.entity.Status">
 			<id			property="statusId"		column="status_id"/>
 			<result		property="statusName"	column="status_name"/>
-			<result		property="createdAt"	column="created_at"/>
-			<result		property="updatedAt"	column="updated_at"/>
 		</association>
 	</resultMap>
 	<!-- 一覧検索 -->

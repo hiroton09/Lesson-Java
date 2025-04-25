@@ -57,3 +57,28 @@ td {
 .task-list {
     background-color: #eee8aa;
 }
+
+/* 詳細テーブル用 */
+.detail-table {
+    background-color: lavender;
+	width: 60%; 					/* テーブル横幅 */
+}
+
+.detail-table .guide {
+	width: 30%; 					/* テーブル横幅 */
+    background-color: lightgray;
+	text-align: center;
+}
+
+.detail-table td {
+    text-align:left;
+}
+
+/* 長い入力の幅 */
+input.long {
+	width: 300px;
+}
+
+.error-msg {
+    color: red;
+}
