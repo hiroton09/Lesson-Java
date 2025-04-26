@@ -14,6 +14,9 @@ public interface TaskRepository {
 	// 一覧全件検索
 	List<TaskSummary> selectListAll();
 	
+	// 一覧条件検索
+	List<TaskSummary> selectListByConditions(@Param("task") Task task);
+	
 	// 新規登録
 	void insert(@Param("task") Task task);
 }

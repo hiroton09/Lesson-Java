@@ -18,8 +18,33 @@
 	<select id="selectListAll"
 			resultMap="taskList">
 		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
-		  FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
-	  ORDER BY tt.task_id
+			FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
+	 		ORDER BY tt.task_id
+	</select>
+	
+	<!-- **************** 一覧条件検索 **************** -->
+	<select id="selectListByConditions"
+			resultMap="taskList">
+		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
+			FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
+	 		WHERE true
+	 		<if test="task.taskContents != null">
+	 			AND task_contents LIKE #{task.taskContents}
+	 		</if>
+	 		<if test="task.statusId != null">
+	 			AND tt.status_id = #{task.statusId}
+	 		</if>
+	 		<if test="task.createdAt != null">
+	 			<![CDATA[
+	 				AND CAST(created_at AS DATE) = #{task.createdAt}	 			
+	 			]]>
+	 		</if>
+			<if test="task.updatedAt != null">
+	 			<![CDATA[
+	 				AND CAST(updated_at AS DATE) = #{task.updatedAt}	 			
+	 			]]>
+	 		</if>
+	 		ORDER BY tt.task_id
 	</select>
 	
 	<!-- **************** 新規登録 **************** -->

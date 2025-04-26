@@ -82,3 +82,7 @@ input.long {
 .error-msg {
     color: red;
 }
+
+.condition-table {
+	background-color: khaki;
+}

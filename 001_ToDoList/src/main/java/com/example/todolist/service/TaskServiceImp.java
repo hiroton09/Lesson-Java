@@ -25,6 +25,15 @@ public class TaskServiceImp implements TaskService {
 		
 		return list;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<TaskSummary> findListByConditions(Task task) {
+		
+		List<TaskSummary> list = taskRepository.selectListByConditions(task);
+		
+		return list;
+	}
 	
 	@Override
 	@Transactional
@@ -32,5 +41,4 @@ public class TaskServiceImp implements TaskService {
 		
 		taskRepository.insert(task);
 	}
-
 }
