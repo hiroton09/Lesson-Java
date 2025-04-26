@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.todolist.entity.Status;
+import com.example.todolist.entity.Task;
 import com.example.todolist.form.TaskRegistForm;
 import com.example.todolist.service.StatusService;
+import com.example.todolist.service.TaskService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class TaskRegistContoller {
 	
 	private final StatusService statusService;
+	private final TaskService taskService;
 	
 	/*-- タスク登録画面表示 --*/
 	@PostMapping("/task-show-regist")
@@ -69,6 +72,14 @@ public class TaskRegistContoller {
 			
 			return "task-regist";
 		}
+		
+		// form -> entityへ
+		Task task = new Task();
+		task.setTaskContents(form.getTaskContents());
+		task.setStatusId(form.getStatusId());
+		
+		// 登録処理
+		taskService.regist(task);
 		
 		// フラッシュスコープに完了メッセージを表示してリダイレクト
 		redirectAttributes.addFlashAttribute("msg", "(タスク登録)");

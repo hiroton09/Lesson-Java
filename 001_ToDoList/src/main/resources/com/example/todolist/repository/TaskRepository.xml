@@ -13,7 +13,8 @@
 			<result		property="statusName"	column="status_name"/>
 		</association>
 	</resultMap>
-	<!-- 一覧検索 -->
+	
+	<!-- **************** 一覧検索 **************** -->
 	<select id="selectListAll"
 			resultMap="taskList">
 		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
@@ -21,4 +22,9 @@
 	  ORDER BY tt.task_id
 	</select>
 	
+	<!-- **************** 新規登録 **************** -->
+	<insert id="insert">
+		INSERT INTO t_task (task_contents, status_id)
+			VALUES (#{task.taskContents}, #{task.statusId})
+	</insert>
 </mapper>
