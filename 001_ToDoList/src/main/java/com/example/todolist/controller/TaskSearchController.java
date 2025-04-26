@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.todolist.entity.Status;
 import com.example.todolist.entity.Task;
+import com.example.todolist.entity.TaskDetail;
 import com.example.todolist.entity.TaskSummary;
+import com.example.todolist.form.TaskSearchDetailForm;
 import com.example.todolist.form.TaskSearchListForm;
 import com.example.todolist.service.StatusService;
 import com.example.todolist.service.TaskService;
@@ -37,7 +39,6 @@ public class TaskSearchController {
 		
 		return "task-list";
 	}
-	
 
 	/*-- 一覧検索リスト --*/
 	@PostMapping("/task-search-list")
@@ -64,5 +65,19 @@ public class TaskSearchController {
 		model.addAttribute("taskSummaryList", list);
 		
 		return "task-list";
+	}
+
+	/*-- タスク詳細 --*/
+	@PostMapping("/task-search-detail")
+	private String searchDetail(TaskSearchDetailForm form,
+			Model model) {
+		
+		// 詳細検索
+		TaskDetail taskDetail = taskService.findDetailByTaskId(form.getTaskId());
+		
+		// 検索結果を格納
+		model.addAttribute("taskDetail", taskDetail);
+		
+		return "task-detail";
 	}
 }

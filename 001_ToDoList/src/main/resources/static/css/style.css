@@ -86,3 +86,16 @@ input.long {
 .condition-table {
 	background-color: khaki;
 }
+
+.tbtn {
+	border: 2px soild steelblue;
+	padding: 2px 10px;
+	font-size: 16px;
+	color: slateblue;
+	cursor: pointer;
+}
+
+.tbtn:hover {
+	color: #fff;
+	background: steelblue;
+}

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.todolist.entity.Task;
+import com.example.todolist.entity.TaskDetail;
 import com.example.todolist.entity.TaskSummary;
 import com.example.todolist.repository.TaskRepository;
 
@@ -33,6 +34,15 @@ public class TaskServiceImp implements TaskService {
 		List<TaskSummary> list = taskRepository.selectListByConditions(task);
 		
 		return list;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public TaskDetail findDetailByTaskId(Integer taskId) {
+		
+		TaskDetail taskDetail = taskRepository.selectDetailByTaskId(taskId);
+		
+		return taskDetail;
 	}
 	
 	@Override

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク詳細</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h2>タスク詳細</h2>
+
+<table class="detail-table" th:object="${taskDetail}">
+	<tr>
+		<td class="guide">【タスクID】</td>
+		<td th:text="*{taskId}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【タスク内容】</td>
+		<td th:text="*{taskContents}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【ステータス】</td>
+		<td th:text="*{status.statusId + '：' + status.statusName}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【作成日】</td>
+		<td th:text="*{createdAt}"></td>
+	</tr>
+	<tr>
+		<td class="guide">【更新日】</td>
+		<td th:text="*{updatedAt}"></td>
+	</tr>
+</table>
+
+<br>
+<a th:href="@{/top}">トップページに戻る</a>
+</body>
+</html>

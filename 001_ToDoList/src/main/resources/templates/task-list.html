@@ -39,6 +39,7 @@
 			<td><input type="date" th:field="*{updatedAt}"></td>}
 		</tr>
 	</table>
+	<br>
    	<input type="submit" value="検索" class="btn">
 </form>
 
@@ -48,6 +49,7 @@
 
 	<table class="task-list">
 		<tr>
+			<th>詳細</th>
 			<th>タスクID</th>
 			<th>タスク内容</th>
 			<th>ステータス</th>
@@ -55,6 +57,12 @@
 			<th>更新日</th>
 		</tr>
 		<tr th:each="task : ${taskSummaryList}">
+			<td>
+				<form th:action="@{/task-search-detail}" method="POST">
+					<input type="hidden" name="taskId" th:value="${task.taskId}">
+					<input type="submit" value="詳細" class="tbtn">
+				</form>
+			</td>
 			<td th:text="${task.taskId}"></td>
 			<td th:text="${task.taskContents}"></td>
 			<td th:text="${task.status.statusId + '：' + task.status.statusName}"></td>
