@@ -30,6 +30,14 @@
 		<td th:text="*{updatedAt}"></td>
 	</tr>
 </table>
+<form th:action="@{/task-show-edit}" method="POST" th:object="${taskDetail}">
+	<input type="hidden" th:field="*{taskId}">
+	<input type="hidden" th:field="*{taskContents}">
+	<input type="hidden" name="statusId" th:value="*{status.statusId}">
+	<input type="hidden" th:field="*{createdAt}">
+	<input type="hidden" th:field="*{updatedAt}">
+	<input type="submit" value="編集" class="btn">
+</form>
 
 <br>
 <a th:href="@{/top}">トップページに戻る</a>
