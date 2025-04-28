@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク一覧</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- ------------新規登録---------------- -->
+<form th:action="@{/task-show-regist}" method="POST">
+   	<input type="submit" value="タスク登録" class="btn">
+</form>
+
+<!-- ------------検索---------------- -->
+<h2>タスク検索</h2>
+
+<form th:action="@{/task-search-list}" method="POST" th:object="${taskSearchListForm}">
+	<table class="condition-table">
+		<tr>
+			<th>【タスク内容】</th>
+			<th>【ステータス】</th>
+			<th>【作成日】</th>
+			<th>【更新日】</th>
+		</tr>
+		<tr>
+			<td><input type="text" th:field="*{taskContents}"></td>}
+			<td>
+				<select th:field="*{statusId}">
+					<option value="">(すべて)</option>
+					<option th:each="status : ${statusList}"
+						th:value="${status.statusId}"
+						th:text="${status.statusId + '：' + status.statusName}"
+						th:selected="${status.statusId == statusId}"
+					>
+					</option>
+				</select>
+			</td>}
+			<td><input type="date" th:field="*{createdAt}"></td>}
+			<td><input type="date" th:field="*{updatedAt}"></td>}
+		</tr>
+	</table>
+	<br>
+   	<input type="submit" value="検索" class="btn">
+</form>
+
+<!-- ------------一覧---------------- -->
+<div th:if="${taskSummaryList} != null">
+	<h2>タスク一覧</h2>
+
+	<table class="task-list">
+		<tr>
+			<th>詳細</th>
+			<th>タスクID</th>
+			<th>タスク内容</th>
+			<th>ステータス</th>
+			<th>作成日</th>
+			<th>更新日</th>
+		</tr>
+		<tr th:each="task : ${taskSummaryList}">
+			<td>
+				<form th:action="@{/task-search-detail}" method="POST">
+					<input type="hidden" name="taskId" th:value="${task.taskId}">
+					<input type="submit" value="詳細" class="tbtn">
+				</form>
+			</td>
+			<td th:text="${task.taskId}"></td>
+			<td th:text="${task.taskContents}"></td>
+			<td th:text="${task.status.statusId + '：' + task.status.statusName}"></td>
+			<td th:text="${task.createdAt}"></td>
+			<td th:text="${task.updatedAt}"></td>
+		</tr>
+
+	</table>
+</div>
+
+</body>
+</html>

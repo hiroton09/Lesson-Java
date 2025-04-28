@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク更新</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2>タスク更新</h2>
+
+<form th:action="@{/task-edit}" method="POST" th:object="${taskEditForm}">
+
+<table class="detail-table">
+	<tr>
+		<td class="guide">【タスクID】</td>
+		<td>
+			<span th:text="*{taskId}"></span>
+		   	<input type="hidden" th:field="*{taskId}">
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【タスク内容】</td>
+		<td>
+		   	<input type="text" th:field="*{taskContents}"><br>
+		   	<div th:if="${#fields.hasErrors('taskContents')}" th:errors="*{taskContents}" class="error-msg"></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【ステータス】</td>
+		<td>
+		   	<select th:field="*{statusId}">
+				<option th:each="status : ${statusList}"
+					th:value="${status.statusId}"
+					th:text="${status.statusId + '：' + status.statusName}"
+					th:selected="${status.statusId == statusId}"
+				>
+				</option>
+			</select>
+		   	<div th:if="${#fields.hasErrors('statusId')}" th:errors="*{statusId}" class="error-msg"></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【作成日】</td>
+		<td>
+			<span th:text="*{createdAt}"></span>
+		   	<input type="hidden" th:field="*{createdAt}">
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【更新日】</td>
+		<td>
+			<span th:text="*{updatedAt}"></span>
+		   	<input type="hidden" th:field="*{updatedAt}">
+		</td>
+	</tr>
+</table>
+
+<input type="submit" value="更新" class="btn">
+
+</form>
+
+<br>
+<a th:href="@{/top}">トップページに戻る</a>
+
+</body>
+</html>

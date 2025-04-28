@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.todolist.repository.TaskRepository">
+
+	<!-- **************** 一覧全件検索 **************** -->
+	<resultMap id="taskList" type="com.example.todolist.entity.TaskSummary">
+		<id			property="taskId"		column="task_id"/>
+		<result		property="taskContents"	column="task_contents"/>
+		<result		property="createdAt"	column="created_at"/>
+		<result		property="updatedAt"	column="updated_at"/>
+		<association property="status" javaType="com.example.todolist.entity.Status">
+			<id			property="statusId"		column="status_id"/>
+			<result		property="statusName"	column="status_name"/>
+		</association>
+	</resultMap>
+	
+	<!-- **************** 詳細検索 **************** -->
+	<resultMap id="taskDetail" type="com.example.todolist.entity.TaskDetail">
+		<id			property="taskId"		column="task_id"/>
+		<result		property="taskContents"	column="task_contents"/>
+		<result		property="createdAt"	column="created_at"/>
+		<result		property="updatedAt"	column="updated_at"/>
+		<association property="status" javaType="com.example.todolist.entity.Status">
+			<id			property="statusId"		column="status_id"/>
+			<result		property="statusName"	column="status_name"/>
+		</association>
+	</resultMap>
+	
+	<!-- **************** 一覧検索 **************** -->
+	<select id="selectListAll"
+			resultMap="taskList">
+		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
+			FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
+	 		ORDER BY tt.task_id
+	</select>
+	
+	<!-- **************** 一覧条件検索 **************** -->
+	<select id="selectListByConditions"
+			resultMap="taskList">
+		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
+			FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
+	 		WHERE true
+	 		<if test="task.taskContents != null">
+	 			AND task_contents LIKE #{task.taskContents}
+	 		</if>
+	 		<if test="task.statusId != null">
+	 			AND tt.status_id = #{task.statusId}
+	 		</if>
+	 		<if test="task.createdAt != null">
+	 			<![CDATA[
+	 				AND CAST(created_at AS DATE) = #{task.createdAt}	 			
+	 			]]>
+	 		</if>
+			<if test="task.updatedAt != null">
+	 			<![CDATA[
+	 				AND CAST(updated_at AS DATE) = #{task.updatedAt}	 			
+	 			]]>
+	 		</if>
+	 		ORDER BY tt.task_id
+	</select>
+		
+	<!-- **************** 詳細検索 **************** -->
+	<select id="selectDetailByTaskId"
+			resultMap="taskDetail">
+		SELECT tt.task_id, tt.task_contents, tt.created_at, tt.updated_at, ms.status_id, ms.status_name
+			FROM t_task tt INNER JOIN m_status ms ON tt.status_id = ms.status_id
+	 		WHERE tt.task_id = #{taskId}
+	 		ORDER BY tt.task_id
+	</select>
+	
+	<!-- **************** 新規登録 **************** -->
+	<insert id="insert">
+		INSERT INTO t_task (task_contents, status_id)
+			VALUES (#{task.taskContents}, #{task.statusId})
+	</insert>
+		
+	<!-- **************** 更新 **************** -->
+	<update id="update">
+		UPDATE 
+			t_task
+		SET
+			task_contents = #{task.taskContents},
+			status_id = #{task.statusId},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			task_id = #{task.taskId}
+	</update>
+		
+	<!-- **************** 削除 **************** -->
+	<delete id="delete">
+		DELETE
+		FROM
+			t_task
+		WHERE
+			task_id = #{taskId}
+	</delete>
+</mapper>

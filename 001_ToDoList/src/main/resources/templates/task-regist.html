@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク登録</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2>タスク登録</h2>
+
+<form th:action="@{/task-regist}" method="POST" th:object="${taskRegistForm}">
+
+<table class="detail-table">
+	<tr>
+		<td class="guide">【タスク内容】</td>
+		<td>
+		   	<input type="text" th:field="*{taskContents}"><br>
+		   	<div th:if="${#fields.hasErrors('taskContents')}" th:errors="*{taskContents}" class="error-msg"></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="guide">【ステータス】</td>
+		<td>
+		   	<select th:field="*{statusId}">
+				<option th:each="status : ${statusList}"
+					th:value="${status.statusId}"
+					th:text="${status.statusId + '：' + status.statusName}"
+					th:selected="${status.statusId == statusId}"
+				>
+				</option>
+			</select>
+		   	<div th:if="${#fields.hasErrors('statusId')}" th:errors="*{statusId}" class="error-msg"></div>
+		</td>
+	</tr>
+</table>
+
+<input type="submit" value="登録" class="btn">
+
+</form>
+
+<br>
+<a th:href="@{/top}">トップページに戻る</a>
+
+</body>
+</html>
