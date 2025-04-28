@@ -82,7 +82,7 @@ public class TaskEditContoller {
 		task.setUpdatedAt(form.getUpdatedAt());
 		
 		// 更新処理
-		taskService.regist(task);
+		taskService.update(task);
 		
 		// フラッシュスコープに完了メッセージを表示してリダイレクト
 		redirectAttributes.addFlashAttribute("msg", "(タスク更新)");

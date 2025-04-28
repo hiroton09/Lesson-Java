@@ -23,4 +23,7 @@ public interface TaskRepository {
 	
 	// 新規登録
 	void insert(@Param("task") Task task);
+	
+	// 更新
+	void update(@Param("task") Task task);
 }

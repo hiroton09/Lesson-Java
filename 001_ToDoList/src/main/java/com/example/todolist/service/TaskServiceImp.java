@@ -51,4 +51,11 @@ public class TaskServiceImp implements TaskService {
 		
 		taskRepository.insert(task);
 	}
+
+	@Override
+	@Transactional
+	public void update(Task task) {
+		
+		taskRepository.update(task);
+	}
 }

@@ -73,4 +73,16 @@
 		INSERT INTO t_task (task_contents, status_id)
 			VALUES (#{task.taskContents}, #{task.statusId})
 	</insert>
+		
+	<!-- **************** 更新 **************** -->
+	<update id="update">
+		UPDATE 
+			t_task
+		SET
+			task_contents = #{task.taskContents},
+			status_id = #{task.statusId},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			task_id = #{task.taskId}
+	</update>
 </mapper>

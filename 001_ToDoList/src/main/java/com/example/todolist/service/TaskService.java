@@ -19,4 +19,8 @@ public interface TaskService {
 	
 	// 新規登録
 	void regist(Task task);
+	
+	
+	// 更新
+	void update(Task task);
 }
