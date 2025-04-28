@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.display-style {
+	background-color: #333;
+	color: #eee;
+	justify-content: end;
+}
+
+.key {
+	cursor: pointer;
+}
+
+.key:hover {
+	background-color: #eee;
+}
