@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>タスク詳細</title>
+<title>タスク削除確認</title>
 <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h2>タスク詳細</h2>
+		
+<h2>タスク削除確認</h2>
 
 <table class="detail-table" th:object="${taskDetail}">
 	<tr>
@@ -30,20 +31,19 @@
 		<td th:text="*{updatedAt}"></td>
 	</tr>
 </table>
-<form th:action="@{/task-show-edit}" method="POST" th:object="${taskDetail}">
-	<input type="hidden" th:field="*{taskId}">
-	<input type="hidden" th:field="*{taskContents}">
-	<input type="hidden" name="statusId" th:value="*{status.statusId}">
-	<input type="hidden" th:field="*{createdAt}">
-	<input type="hidden" th:field="*{updatedAt}">
-	<input type="submit" value="編集" class="btn">
-</form>
-<form th:action="@{/task-remove}" method="POST" th:object="${taskDetail}">
-	<input type="hidden" th:field="*{taskId}">
-	<input type="submit" value="削除" class="btn">
+<br>
+
+<form th:action="@{/task-confirm-remove}" method="POST" 
+		th:object="${taskDetail}">
+    <input type="hidden" th:field="*{taskId}">
+    <input type="submit" value="削除実行" class="btn">
 </form>
 
-<br>
-<a th:href="@{/top}">トップページに戻る</a>
+<form th:action="@{/task-search-detail}" method="POST"
+		th:object="${taskDetail}">
+    <input type="hidden" th:field="*{taskId}">
+   	<input type="submit" value="もどる" class="btn">
+</form>
+
 </body>
 </html>

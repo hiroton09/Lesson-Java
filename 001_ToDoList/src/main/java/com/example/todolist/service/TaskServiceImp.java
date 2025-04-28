@@ -58,4 +58,11 @@ public class TaskServiceImp implements TaskService {
 		
 		taskRepository.update(task);
 	}
+
+	@Override
+	@Transactional
+	public void remove(Integer taskId) {
+		
+		taskRepository.delete(taskId);
+	}
 }

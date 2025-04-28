@@ -26,4 +26,7 @@ public interface TaskRepository {
 	
 	// 更新
 	void update(@Param("task") Task task);
+	
+	// 削除
+	void delete(@Param("taskId") Integer taskId);
 }
