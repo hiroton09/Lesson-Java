@@ -22,11 +22,11 @@ public class CalcController {
 		// 記号表示項目
 		List<String> markList = new ArrayList<>();
 		markList.add("C");
-		markList.add("＋");
-		markList.add("－");
-		markList.add("×");
-		markList.add("÷");
-		markList.add("＝");
+		markList.add("+");
+		markList.add("-");
+		markList.add("*");
+		markList.add("/");
+		markList.add("=");
 		markList.add(".");
 		
 		model.addAttribute("numberList", numberList);

@@ -5,27 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>電卓アプリ</title>
 <link rel="stylesheet" th:href="@{/css/style.css}">
-<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-<script th:href="@{/js/main.js}"></script>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
 <div class="container">
 	<h2 class="row pl-4 mt-4 mb-4 border-bottom">電卓アプリ</h2>
-	<div class="row mb-4 p-4 display-style border" id="display">111</div>
+	<div class="row mb-4 p-4 display-style border" id="display"></div>
 	<div class="row">
-		<div class="left-key col-8 row">
-			<div class="col-4 border d-flex justify-content-center align-items-center key" th:each="number : ${numberList}">			
+		<div class="col-8 row">
+			<div class="col-4 border d-flex justify-content-center align-items-center key-number" th:each="number : ${numberList}">			
 				<p class="text-center mb-0 pt-2 pb-2" th:text="${number}"></p>
 			</div>
 		</div>
-		<div class="right-key col row">
-			<div class="col-6 border d-flex justify-content-center align-items-center key" th:each="mark : ${markList}">
+		<div class="col row">
+			<div class="col-6 border d-flex justify-content-center align-items-center key-mark" th:each="mark : ${markList}">
 				<p class="text-center mb-0 pt-2 pb-2" th:text="${mark}"></p>				
 			</div>
 		</div>
 	</div>
+	<div class="hidden" id="save-number"></div>
+	<div class="hidden" id="save-mark"></div>
 </div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

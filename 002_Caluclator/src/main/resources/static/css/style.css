@@ -5,10 +5,13 @@
 	justify-content: end;
 }
 
-.key {
+.key-number, .key-mark {
 	cursor: pointer;
 }
 
-.key:hover {
+.key-number:hover, .key-mark:hover {
 	background-color: #eee;
+}
+.hidden {
+	display: hidden;
 }
