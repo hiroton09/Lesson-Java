@@ -4,9 +4,14 @@ $(document).ready(function() {
 	var markKey = $('.key-mark');
 	var saveNumber = $('save-number');
 	var saveMark = $('save-mark');
+	var afterNumberFlg = false;
 
 	// 押下されたナンバーキーをディスプレイに追記する
 	numberKey.on('click', function() {
+		if(afterNumberFlg) {
+			display.text("");
+			afterNumberFlg = false;
+		}
         display.text(display.text() + $(this).children('p').text());
     });
 
@@ -27,14 +32,38 @@ $(document).ready(function() {
 		// 		割り算ができない場合、ERRの表示を出力
 		if(selectkey == "C") {
 			display.text("");
+			saveNumber = "";
+			saveMark = "";
 		} else if(selectkey == "=") {
-			console.log("計算結果");
-		} else {
-			if($.isNumeric(display.text().slice(-1))) {
-				display.text(display.text() + selectkey);
-			} else if(display.text() != "") {
-				display.text(display.text().slice(0, -1) + selectkey);
+			if(saveNumber.length && saveMark.length && !display.text()) {
+				display.text(saveNumber);
+			} else if(saveNumber.length && saveMark.length && display.text().length && $.isNumeric(display[0].textContent)) {
+				console.log("計算可能：");
+				switch(saveMark) {
+					case "+":
+						display.text(Number(saveNumber) + Number(display[0].textContent));
+						break;
+					case "-":
+						display.text(Number(saveNumber) - Number(display[0].textContent));
+						break;
+					case "*":
+						display.text(Number(saveNumber) * Number(display[0].textContent));
+						break;
+					case "/":
+						display.text(Number(saveNumber) / Number(display[0].textContent));
+						break;					
+				}
+				saveNumber = display[0].textContent;
+				saveMark = "";
 			}
+		} else {
+			if(!saveMark.length) {
+				saveNumber = display[0].textContent;
+				display.text("");
+			}
+			saveMark = selectkey;
+			display.text(selectkey);
+			afterNumberFlg = true;
 		}
 	});
 
