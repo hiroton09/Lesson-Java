@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.memopad.repository.CategoryRepository">
+	
+	<resultMap type="com.example.memopad.entity.CategorySummary" id="catgoryList">
+		<id property="categoryId" column="category_id"/>
+		<result property="categoryName" column="category_name"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="status" javaType="com.example.memopad.entity.Status">
+			<id property="statusId" column="status_id"/>
+			<result property="statusName" column="status_name"/>
+		</association>
+	</resultMap>
+	
+	<!-- ********** 条件検索による一覧取得 ********** -->
+	<select id="selectListByCondition"
+		resultMap="catgoryList">
+		SELECT
+			tc.category_id, tc.category_name, tc.created_at, tc.upadted_at, ms.status_id, ms.status_name
+		FROM
+			t_category tc
+		INNER JOIN 
+			m_status ms
+		ON
+			tc.status_id = ms.status_id
+		WHERE true
+			<if test="category.categoryId != null">
+				AND tc.category_id = #{category.categoryId}
+			</if>
+			<if test="category.categoryName != null">
+				AND tc.category_name LIKE #{category.categoryName}
+			</if>
+			<if test="category.statusId != null">
+				AND tc.status_id = #{category.statusId}
+			</if>
+			<if test="category.createdAt != null">
+				<![CDATA[
+					AND CAST(tc.created_at AS DATE) = #{category.createdAt}
+				]]>
+			</if>
+			<if test="category.updatedAt != null">
+				<![CDATA[
+					AND CAST(tc.updated_at AS DATE) = #{category.updatedAt}
+				]]>
+			</if>
+		ORDER BY tc.category_id
+	</select>
+</mapper>

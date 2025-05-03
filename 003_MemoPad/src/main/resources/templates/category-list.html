@@ -8,23 +8,22 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-<h2 class="text-center">カテゴリー一覧</h2>
-<div class="container">
-	<!-- 新規登録ボタン -->
+<h2 class="text-center m-2 pb-2 border-bottom">カテゴリー一覧</h2>
+<div class="container-fluid">
 	<!-- 検索フォーム -->
-	<div>
+	<div class="mb-4">
 		<form th:action="@{/category-search-list}" method="POST" th:object="${categorySearchListForm}">
 			<table>
 				<tr>
 					<th>【カテゴリーID】</th>
+					<td><input type="number" th:field="*{categoryId}"></td>
+				</tr>					
+				<tr>
 					<th>【カテゴリー名】</th>
-					<th>【ステータス】</th>
-					<th>【作成日】</th>
-					<th>【更新日】</th>
+					<td><input type="text" th:field="*{categoryName}"></td>
 				</tr>
 				<tr>
-					<td><input type="number" th:field="*{categoryId}"></td>
-					<td><input type="text" th:field="*{categoryName}"></td>
+					<th>【ステータス】</th>
 					<td>
 						<select th:field="*{statusId}">
 							<option value="">（すべて）</option>
@@ -35,17 +34,31 @@
 							</option>
 						</select>
 					</td>
+				</tr>
+				<tr>
+					<th>【作成日】</th>
 					<td><input type="date" th:field="*{createdAt}"></td>
+				</tr>
+				<tr>
+					<th>【更新日】</th>
 					<td><input type="date" th:field="*{updatedAt}"></td>
 				</tr>
 			</table>
+			<input type="submit" value="検索" class="btn btn-primary mt-2"/>
+		</form>
+	</div>
+	
+	<!-- 新規登録ボタン -->
+	<div class="mb-4">
+		<form th:action="@{/show-category-regist}" method="POST">
+			<input type="submit" value="カテゴリー登録" class="btn btn-primary"/>
 		</form>
 	</div>
 	
 	<!-- 一覧表示 -->
 	<div th:if="${categorySummaryList} != null">
-		<h2>カテゴリー一覧</h2>
-		<table>
+		<div>カテゴリー一覧</div>
+		<table class="table table-hover">
 			<tr>
 				<th>詳細</th>
 				<th>削除</th>
@@ -66,7 +79,6 @@
 			</tr>
 		</table>
 	</div>
-
 </div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
