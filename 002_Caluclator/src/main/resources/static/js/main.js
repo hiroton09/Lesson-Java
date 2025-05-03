@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	const ERR_MSG_01 = "不正な計算です。";
 	var display = $('#display');
     var numberKey = $('.key-number');
 	var markKey = $('.key-mark');
@@ -20,11 +21,11 @@ $(document).ready(function() {
 		var selectkey = $(this).children('p').text();
 
 		// Cが押下された場合、ディスプレイを空にする	
+		// 小数点が押下された場合、複数入力されていないかのチェックを行う
 		// =が押下された場合、
 		// 		saveNumberとsaveMarkに値がない場合、なにもしない
 		// 		saveNumberとsaveMarkに値があり、ディスプレイに数字がない場合、saveNumberを表示
 		// 		saveNumberとsaveMarkに値があり、ディスプレイに数字がある場合、計算した結果を表示する
-		// 小数点が押下された場合、複数入力されていないかのチェックを行う
 		// 四則演算記号が押下された場合
 		// 		ディスプレイの文字が空の場合、なにもしない
 		// 		saveMarkに値が既に入っている場合、saveNumberはそのままでsaveMarkのみ入れ替える
@@ -34,11 +35,14 @@ $(document).ready(function() {
 			display.text("");
 			saveNumber = "";
 			saveMark = "";
+		} else if(selectkey == ".") {
+			if(display[0].textContent.indexOf(selectkey) < 0) {
+				display.text(display.text() + selectkey);
+			}
 		} else if(selectkey == "=") {
 			if(saveNumber.length && saveMark.length && !display.text()) {
 				display.text(saveNumber);
 			} else if(saveNumber.length && saveMark.length && display.text().length && $.isNumeric(display[0].textContent)) {
-				console.log("計算可能：");
 				switch(saveMark) {
 					case "+":
 						display.text(Number(saveNumber) + Number(display[0].textContent));
@@ -50,7 +54,12 @@ $(document).ready(function() {
 						display.text(Number(saveNumber) * Number(display[0].textContent));
 						break;
 					case "/":
-						display.text(Number(saveNumber) / Number(display[0].textContent));
+						if(display[0].textContent == 0) {
+							alert(ERR_MSG_01);
+							display.text("");
+						} else {
+							display.text(Number(saveNumber) / Number(display[0].textContent));
+						}
 						break;					
 				}
 				saveNumber = display[0].textContent;
