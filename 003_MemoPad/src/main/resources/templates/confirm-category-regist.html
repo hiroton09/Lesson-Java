@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>メモ帳アプリ</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<h2 class="text-center m-4">カテゴリー登録確認</h2>
+<div class="container-fluid">
+	<table th:object="${categoryRegistForm}" class="table">
+		<tr>
+			<th>【カテゴリー名】</th>
+			<td th:text="*{categoryName}"></td>
+		</tr>
+		<tr>
+			<th>【ステータス】</th>
+			<td th:text="*{statusId + '：' + statusName}"></td>
+		</tr>
+		<tr>
+			<th>【備考】</th>
+			<td th:text="*{remarks}"></td>
+		</tr>
+	</table>
+
+	<form th:action="@{/category-regist}" method="POST" th:object="${categoryRegistForm}">
+		<input type="hidden" th:field="*{categoryName}">
+		<input type="hidden" th:field="*{statusId}">
+		<input type="hidden" th:field="*{remarks}">
+		<input type="submit" value="登録実行" class="btn btn-primary mt-2"/>
+	</form>
+	<form th:action="@{/show-category-regist}" method="POST" th:object="${categoryRegistForm}">
+		<input type="hidden" th:field="*{categoryName}">
+		<input type="hidden" th:field="*{statusId}">
+		<input type="hidden" th:field="*{remarks}">
+		<input type="submit" value="戻る" class="btn btn-outline-secondary mt-2"/>
+	</form>
+</div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

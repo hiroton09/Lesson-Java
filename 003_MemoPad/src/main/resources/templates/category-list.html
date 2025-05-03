@@ -8,12 +8,12 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-<h2 class="text-center m-2 pb-2 border-bottom">カテゴリー一覧</h2>
+<h2 class="text-center m-4">カテゴリー一覧</h2>
 <div class="container-fluid">
 	<!-- 検索フォーム -->
 	<div class="mb-4">
 		<form th:action="@{/category-search-list}" method="POST" th:object="${categorySearchListForm}">
-			<table>
+			<table class="table">
 				<tr>
 					<th>【カテゴリーID】</th>
 					<td><input type="number" th:field="*{categoryId}"></td>
