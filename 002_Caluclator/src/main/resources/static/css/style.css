@@ -1,0 +1,17 @@
+@charset "UTF-8";
+.display-style {
+	background-color: #333;
+	color: #eee;
+	justify-content: end;
+}
+
+.key-number, .key-mark {
+	cursor: pointer;
+}
+
+.key-number:hover, .key-mark:hover {
+	background-color: #eee;
+}
+.hidden {
+	display: hidden;
+}
