@@ -46,4 +46,12 @@
 			</if>
 		ORDER BY tc.category_id
 	</select>
+	
+	<!-- ********** 登録 ********** -->
+	<insert id="insert">
+		INSERT INTO t_category 
+			(category_name, status_id, remarks)
+		VALUES
+			(#{category.categoryName}, #{category.statusId}, #{category.remarks})
+	</insert>
 </mapper>

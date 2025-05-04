@@ -27,4 +27,12 @@ public class CategoryServiceImp implements CategoryService {
 		return list;
 	}
 
+	// 登録
+	@Override
+	@Transactional
+	public void regist(Category category) {
+		
+		categoryRepository.insert(category);
+	}
+
 }

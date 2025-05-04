@@ -13,5 +13,8 @@ public interface CategoryRepository {
 	
 	// 条件検索による一覧取得
 	List<CategorySummary> selectListByCondition(@Param("category") Category category);
+	
+	// 登録
+	void insert(@Param("category") Category category);
 
 }

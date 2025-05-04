@@ -59,7 +59,7 @@
 	<div th:if="${categorySummaryList} != null">
 		<div>カテゴリー一覧</div>
 		<table class="table table-hover">
-			<tr>
+			<tr class="table-primary">
 				<th>詳細</th>
 				<th>削除</th>
 				<th>カテゴリーID</th>
@@ -69,7 +69,12 @@
 				<th>更新日</th>
 			</tr>
 			<tr th:each="category: ${categorySummaryList}">
-				<td>詳細</td>
+				<td>
+					<form th:action="@{/show-category-detail}" method="POST">
+						<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>
+						<input type="submit" value="詳細" class="btn btn-primary"/>
+					</form>
+				</td>
 				<td>削除</td>
 				<td th:text="${category.categoryId}"></td>
 				<td th:text="${category.categoryName}"></td>
