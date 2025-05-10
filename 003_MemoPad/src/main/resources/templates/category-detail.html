@@ -78,10 +78,10 @@
 		<th:block th:if="*{modeFlg == 'delete'}">
 			<input type="submit" name="delete" value="削除確認" class="btn btn-primary mt-2"/>
 		</th:block>
+		<a href="/top" class="btn btn-outline-secondary mt-2">戻る</a>
 	</div>
-</form>
-<form th:action="@{/top}" method="GET">
-	<input type="submit" value="戻る" class="btn btn-outline-secondary mt-2"/>
+	<input type="hidden" th:field="*{categoryId}"/>
+	<input type="hidden" th:field="*{modeFlg}"/>
 </form>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>

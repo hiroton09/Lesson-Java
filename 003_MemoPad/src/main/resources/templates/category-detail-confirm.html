@@ -8,35 +8,103 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-<h2 class="text-center m-4">カテゴリー登録確認</h2>
-<div class="container-fluid">
-	<table th:object="${categoryRegistForm}" class="table">
-		<tr>
-			<th>【カテゴリー名】</th>
-			<td th:text="*{categoryName}"></td>
-		</tr>
-		<tr>
-			<th>【ステータス】</th>
-			<td th:text="*{statusId + '：' + statusName}"></td>
-		</tr>
-		<tr>
-			<th>【備考】</th>
-			<td th:text="*{remarks}"></td>
-		</tr>
-	</table>
-
-	<form th:action="@{/category-regist}" method="POST" th:object="${categoryRegistForm}">
-		<input type="hidden" th:field="*{categoryName}">
-		<input type="hidden" th:field="*{statusId}">
-		<input type="hidden" th:field="*{remarks}">
-		<input type="submit" value="登録実行" class="btn btn-primary mt-2"/>
-	</form>
-	<form th:action="@{/show-category-regist}" method="POST" th:object="${categoryRegistForm}">
-		<input type="hidden" th:field="*{categoryName}">
-		<input type="hidden" th:field="*{statusId}">
-		<input type="hidden" th:field="*{remarks}">
-		<input type="submit" value="戻る" class="btn btn-outline-secondary mt-2"/>
-	</form>
+<div th:object="${categoryDetailForm}">
+	<th:block th:if="*{modeFlg == 'regist'}"><h2 class="text-center m-4">カテゴリー登録確認</h2></th:block>
+	<th:block th:if="*{modeFlg == 'update'}"><h2 class="text-center m-4">カテゴリー更新確認</h2></th:block>
+	<th:block th:if="*{modeFlg == 'delete'}"><h2 class="text-center m-4">カテゴリー削除確認</h2></th:block>
+	<div class="container-fluid">
+		<table class="table">
+			<tr>
+				<th>【カテゴリーID】</th>
+				<td th:text="*{categoryId}"></td>
+			</tr>
+			<tr>
+				<th>【カテゴリー名】</th>
+				<td th:text="*{categoryName}"></td>
+			</tr>
+			<tr>
+				<th>【ステータス】</th>
+				<td th:text="*{statusId + '：' + statusName}"></td>
+			</tr>
+			<tr>
+				<th>【備考】</th>
+				<td th:text="*{remarks}"></td>
+			</tr>
+			<tr>
+				<th>【作成日】</th>
+				<td th:text="*{createdAt}"></td>
+			</tr>
+			<tr>
+				<th>【更新日】</th>
+				<td th:text="*{updatedAt}"></td>
+			</tr>
+		</table>
+	
+		<th:block th:if="*{modeFlg == 'regist'}">
+			<form th:action="@{/category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="submit" name="regist" value="登録実行" class="btn btn-primary mt-2"/>
+			</form>
+			<form th:action="@{/show-category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="submit" name="regist" value="戻る" class="btn btn-outline-secondary mt-2"/>
+			</form>
+		</th:block>
+	
+		<th:block th:if="*{modeFlg == 'update'}">
+			<form th:action="@{/category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="hidden" th:field="*{createdAt}">
+				<input type="hidden" th:field="*{updatedAt}">
+				<input type="submit" name="update" value="登録実行" class="btn btn-primary mt-2"/>
+			</form>
+			<form th:action="@{/show-category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="hidden" th:field="*{createdAt}">
+				<input type="hidden" th:field="*{updatedAt}">
+				<input type="submit" name="update" value="戻る" class="btn btn-outline-secondary mt-2"/>
+			</form>
+		</th:block>
+	
+		<th:block th:if="*{modeFlg == 'delete'}">
+			<form th:action="@{/category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="hidden" th:field="*{createdAt}">
+				<input type="hidden" th:field="*{updatedAt}">
+				<input type="submit" name="delete" value="登録実行" class="btn btn-primary mt-2"/>
+			</form>
+			<form th:action="@{/show-category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="hidden" th:field="*{createdAt}">
+				<input type="hidden" th:field="*{updatedAt}">
+				<input type="submit" name="delete" value="戻る" class="btn btn-outline-secondary mt-2"/>
+			</form>
+		</th:block>
+	</div>
 </div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
