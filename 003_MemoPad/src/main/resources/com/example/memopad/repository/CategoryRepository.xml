@@ -30,7 +30,7 @@
 	<select id="selectListByCondition"
 		resultMap="catgoryList">
 		SELECT
-			tc.category_id, tc.category_name, tc.created_at, tc.upadted_at, ms.status_id, ms.status_name
+			tc.category_id, tc.category_name, tc.created_at, tc.updated_at, ms.status_id, ms.status_name
 		FROM
 			t_category tc
 		INNER JOIN 
@@ -64,7 +64,7 @@
 	<select id="selectDetailByCategoryId"
 		resultMap="catgoryDetail">
 		SELECT
-			tc.category_id, tc.category_name, tc.memo_id, tc.remarks, tc.created_at, tc.upadted_at, ms.status_id, ms.status_name
+			tc.category_id, tc.category_name, tc.memo_id, tc.remarks, tc.created_at, tc.updated_at, ms.status_id, ms.status_name
 		FROM
 			t_category tc
 		INNER JOIN 
@@ -82,4 +82,25 @@
 		VALUES
 			(#{category.categoryName}, #{category.statusId}, #{category.remarks})
 	</insert>
+	
+	<!-- ********** 更新 ********** -->
+	<update id="update">
+		UPDATE 
+			t_category
+		SET
+			category_name = #{category.categoryName},
+			status_id = #{category.statusId},
+			remarks = #{category.remarks},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			category_id = #{category.categoryId}
+	</update>
+	
+	<!-- ********** 削除 ********** -->
+	<delete id="delete">
+		DELETE FROM
+			t_category 
+		WHERE
+			category_id = #{categoryId}
+	</delete>
 </mapper>

@@ -46,4 +46,22 @@ public class CategoryServiceImp implements CategoryService {
 		categoryRepository.insert(category);
 	}
 
+	// 更新
+	@Override
+	@Transactional
+	public void update(Category category) {
+
+		categoryRepository.update(category);
+		
+	}
+
+	// 削除
+	@Override
+	@Transactional
+	public void delete(Integer categoryId) {
+		
+		categoryRepository.delete(categoryId);
+		
+	}
+
 }

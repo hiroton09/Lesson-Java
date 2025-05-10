@@ -16,4 +16,10 @@ public interface CategoryService {
 	
 	// 登録
 	void regist(Category category);
+	
+	// 更新
+	void update(Category category);
+	
+	// 削除
+	void delete(Integer categoryId);
 }

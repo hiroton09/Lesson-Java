@@ -19,4 +19,5 @@ public class CategoryDetailForm {
 	private Date createdAt;
 	private Date updatedAt;
 	private String modeFlg;
+	private boolean initFlg = true;
 }

@@ -20,5 +20,10 @@ public interface CategoryRepository {
 	
 	// 登録
 	void insert(@Param("category") Category category);
-
+	
+	// 更新
+	void update(@Param("category") Category category);
+	
+	// 削除
+	void delete(@Param("categoryId") Integer categoryId);
 }
