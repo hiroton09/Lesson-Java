@@ -12,6 +12,19 @@
 			<result property="statusName" column="status_name"/>
 		</association>
 	</resultMap>
+		
+	<resultMap type="com.example.memopad.entity.CategoryDetail" id="catgoryDetail">
+		<id property="categoryId" column="category_id"/>
+		<result property="categoryName" column="category_name"/>
+		<result property="memoId" column="memo_id"/>
+		<result property="remarks" column="remarks"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="status" javaType="com.example.memopad.entity.Status">
+			<id property="statusId" column="status_id"/>
+			<result property="statusName" column="status_name"/>
+		</association>
+	</resultMap>
 	
 	<!-- ********** 条件検索による一覧取得 ********** -->
 	<select id="selectListByCondition"
@@ -45,6 +58,21 @@
 				]]>
 			</if>
 		ORDER BY tc.category_id
+	</select>
+		
+	<!-- ********** 詳細検索 ********** -->
+	<select id="selectDetailByCategoryId"
+		resultMap="catgoryDetail">
+		SELECT
+			tc.category_id, tc.category_name, tc.memo_id, tc.remarks, tc.created_at, tc.upadted_at, ms.status_id, ms.status_name
+		FROM
+			t_category tc
+		INNER JOIN 
+			m_status ms
+		ON
+			tc.status_id = ms.status_id
+		WHERE true
+			AND tc.category_id = #{categoryId}
 	</select>
 	
 	<!-- ********** 登録 ********** -->

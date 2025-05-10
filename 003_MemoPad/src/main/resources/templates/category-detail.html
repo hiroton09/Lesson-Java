@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>メモ帳アプリ</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<form th:action="@{/confirm-category-detail}" method="POST" th:object="${categoryDetailForm}">
+	<th:block th:if="*{modeFlg == 'read'}"><h2 class="text-center m-4">カテゴリー詳細</h2></th:block>
+	<th:block th:if="*{modeFlg == 'regist'}"><h2 class="text-center m-4">カテゴリー登録</h2></th:block>
+	<th:block th:if="*{modeFlg == 'update'}"><h2 class="text-center m-4">カテゴリー更新</h2></th:block>
+	<th:block th:if="*{modeFlg == 'delete'}"><h2 class="text-center m-4">カテゴリー削除</h2></th:block>
+	<div class="container-fluid">
+		<table class="table">
+			<tr>
+				<th>【カテゴリーID】</th>
+				<td th:text="*{categoryId}"></td>
+			</tr>
+			<tr>
+				<th>【カテゴリー名】</th>
+				<th:block th:if="*{modeFlg == 'read' || modeFlg == 'delete'}">
+					<td th:text="*{categoryName}"></td>
+				</th:block>
+				<th:block th:if="*{modeFlg == 'regist' || modeFlg == 'update'}">
+					<td>
+						<input type="text" th:field="*{categoryName}"/>
+						<div th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}" class="text-danger"></div>
+					</td>
+				</th:block>
+			</tr>
+			<tr>
+				<th>【ステータス】</th>
+				<th:block th:if="*{modeFlg == 'read' || modeFlg == 'delete'}">
+					<td th:text="*{statusId + '：' + statusName}"></td>
+				</th:block>
+				<th:block th:if="*{modeFlg == 'regist' || modeFlg == 'update'}">
+					<td>
+						<select th:field="*{statusId}">
+							<option th:each="status: ${statusList}"
+									th:value="${status.statusId}"
+									th:text="${status.statusId + '：' + status.statusName}"
+									th:selected="${status.statusId == statusId}">
+							</option>
+						</select>
+					</td>
+				</th:block>
+			</tr>
+			<tr>
+				<th>【備考】</th>
+				<th:block th:if="*{modeFlg == 'read' || modeFlg == 'delete'}">
+					<td th:text="*{remarks}"></td>
+				</th:block>
+				<th:block th:if="*{modeFlg == 'regist' || modeFlg == 'update'}">
+					<td>
+						<input type="text" th:field="*{remarks}"/>
+						<div th:if="${#fields.hasErrors('remarks')}" th:errors="*{remarks}" class="text-danger"></div>
+					</td>
+				</th:block>
+			</tr>
+			<tr>
+				<th>【作成日】</th>
+				<td th:text="*{createdAt}"></td>
+			</tr>
+			<tr>
+				<th>【更新日】</th>
+				<td th:text="*{updatedAt}"></td>
+			</tr>
+		</table>
+		<th:block th:if="*{modeFlg == 'regist'}">
+			<input type="submit" name="regist" value="登録確認" class="btn btn-primary mt-2"/>
+		</th:block>
+		<th:block th:if="*{modeFlg == 'update'}">
+			<input type="submit" name="update" value="更新確認" class="btn btn-primary mt-2"/>
+		</th:block>
+		<th:block th:if="*{modeFlg == 'delete'}">
+			<input type="submit" name="delete" value="削除確認" class="btn btn-primary mt-2"/>
+		</th:block>
+	</div>
+</form>
+<form th:action="@{/top}" method="GET">
+	<input type="submit" value="戻る" class="btn btn-outline-secondary mt-2"/>
+</form>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
