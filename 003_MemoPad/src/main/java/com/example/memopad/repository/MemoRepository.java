@@ -26,4 +26,7 @@ public interface MemoRepository {
 	
 	// 削除
 	void delete(@Param("memoId") Integer memoId);
+	
+	// カテゴリーIDに紐づくメモ削除
+	void deleteByCategoryId(@Param("categoryId") Integer categoryId);
 }

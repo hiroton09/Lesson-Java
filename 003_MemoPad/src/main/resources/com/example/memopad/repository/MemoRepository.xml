@@ -105,4 +105,12 @@
 		WHERE
 			memo_id = #{memoId}
 	</delete>
+	
+	<!-- ********** カテゴリーIDに紐づくメモ削除 ********** -->
+	<delete id="deleteByCategoryId">
+		DELETE FROM
+			t_memo 
+		WHERE
+			category_id = #{categoryId}
+	</delete>
 </mapper>

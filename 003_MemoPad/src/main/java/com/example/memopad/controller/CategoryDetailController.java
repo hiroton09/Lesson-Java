@@ -15,6 +15,7 @@ import com.example.memopad.entity.CategoryDetail;
 import com.example.memopad.entity.Status;
 import com.example.memopad.form.CategoryDetailForm;
 import com.example.memopad.service.CategoryService;
+import com.example.memopad.service.MemoService;
 import com.example.memopad.service.StatusService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class CategoryDetailController {
 	
 	private final StatusService statusService;
 	private final CategoryService categoryService;
+	private final MemoService memoService;
 	
 	// 画面表示リクエスト(詳細)
 	@PostMapping(value="show-category-detail", params="read")
@@ -243,6 +245,7 @@ public class CategoryDetailController {
 			Model model) {
 
 		// 削除処理
+		memoService.deleteByCategoryId(form.getCategoryId());
 		categoryService.delete(form.getCategoryId());
 		
 		redirectAttributes.addFlashAttribute("msg", "カテゴリー削除完了");

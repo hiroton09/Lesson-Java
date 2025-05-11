@@ -64,4 +64,13 @@ public class MemoServiceImp implements MemoService {
 		
 	}
 
+	// カテゴリーIDに紐づくメモ削除
+	@Override
+	@Transactional
+	public void deleteByCategoryId(Integer categoryId) {
+		
+		memoRepository.deleteByCategoryId(categoryId);
+		
+	}
+
 }

@@ -22,4 +22,7 @@ public interface MemoService {
 	
 	// 削除
 	void delete(Integer memoId);
+	
+	// カテゴリーIDに紐づくメモ削除
+	void deleteByCategoryId(Integer categoryId);
 }
