@@ -84,6 +84,7 @@
 		<th:block th:if="*{modeFlg == 'delete'}">
 			<form th:action="@{/memo-detail}" method="POST" th:object="${memoDetailForm}">
 				<input type="hidden" th:field="*{memoId}">
+				<input type="hidden" th:field="*{categoryId}">
 				<input type="submit" name="delete" value="削除実行" class="btn btn-primary mt-2"/>
 			</form>
 			<form th:action="@{/show-memo-detail}" method="POST" th:object="${memoDetailForm}">

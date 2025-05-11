@@ -109,6 +109,7 @@ public class MemoDetailController {
 		// 登録処理
 		memoService.regist(memo);
 		
+		redirectAttributes.addFlashAttribute("categoryId", form.getCategoryId());
 		redirectAttributes.addFlashAttribute("msg", "メモ登録完了");
 		
 		return "redirect:/memo-complete";
@@ -187,6 +188,7 @@ public class MemoDetailController {
 		// 更新処理
 		memoService.update(memo);
 		
+		redirectAttributes.addFlashAttribute("categoryId", form.getCategoryId());
 		redirectAttributes.addFlashAttribute("msg", "メモ更新完了");
 		
 		return "redirect:/memo-complete";
@@ -232,6 +234,7 @@ public class MemoDetailController {
 		// 削除処理
 		memoService.delete(form.getMemoId());
 		
+		redirectAttributes.addFlashAttribute("categoryId", form.getCategoryId());
 		redirectAttributes.addFlashAttribute("msg", "メモ削除完了");
 		
 		return "redirect:/memo-complete";
