@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.memopad.repository.CategoryRepository">
+	
+	<resultMap type="com.example.memopad.entity.CategorySummary" id="catgoryList">
+		<id property="categoryId" column="category_id"/>
+		<result property="categoryName" column="category_name"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="status" javaType="com.example.memopad.entity.Status">
+			<id property="statusId" column="status_id"/>
+			<result property="statusName" column="status_name"/>
+		</association>
+	</resultMap>
+		
+	<resultMap type="com.example.memopad.entity.CategoryDetail" id="catgoryDetail">
+		<id property="categoryId" column="category_id"/>
+		<result property="categoryName" column="category_name"/>
+		<result property="remarks" column="remarks"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="status" javaType="com.example.memopad.entity.Status">
+			<id property="statusId" column="status_id"/>
+			<result property="statusName" column="status_name"/>
+		</association>
+		<collection property="memoList" ofType="com.example.memopad.entity.MemoSummary">
+			<id property="memoId" column="memo_id"/>
+			<result property="memoTitle" column="memo_title"/>
+			<result property="createdAt" column="tm_created_at"/>
+			<result property="updatedAt" column="tm_updated_at"/>
+			<association property="status" javaType="com.example.memopad.entity.Status">
+				<id property="statusId" column="tm_status_id"/>
+				<result property="statusName" column="tm_status_name"/>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<!-- ********** 条件検索による一覧取得 ********** -->
+	<select id="selectListByCondition"
+		resultMap="catgoryList">
+		SELECT
+			tc.category_id, tc.category_name, tc.created_at, tc.updated_at, ms.status_id, ms.status_name
+		FROM
+			t_category tc
+		INNER JOIN 
+			m_status ms
+		ON
+			tc.status_id = ms.status_id
+		WHERE true
+			<if test="category.categoryId != null">
+				AND tc.category_id = #{category.categoryId}
+			</if>
+			<if test="category.categoryName != null">
+				AND tc.category_name LIKE #{category.categoryName}
+			</if>
+			<if test="category.statusId != null">
+				AND tc.status_id = #{category.statusId}
+			</if>
+			<if test="category.createdAt != null">
+				<![CDATA[
+					AND CAST(tc.created_at AS DATE) = #{category.createdAt}
+				]]>
+			</if>
+			<if test="category.updatedAt != null">
+				<![CDATA[
+					AND CAST(tc.updated_at AS DATE) = #{category.updatedAt}
+				]]>
+			</if>
+		ORDER BY tc.category_id
+	</select>
+		
+	<!-- ********** 詳細検索 ********** -->
+	<select id="selectDetailByCategoryId"
+		resultMap="catgoryDetail">
+		SELECT
+			tc.category_id, tc.category_name, tc.remarks, tc.created_at, tc.updated_at, ms.status_id, ms.status_name,
+			tm.memo_id, tm.memo_title, tm.status_id tm_status_id, ms2.status_name tm_status_name, tm.created_at tm_created_at, tm.updated_at tm_updated_at
+		FROM
+			t_category tc
+		INNER JOIN 
+			m_status ms
+		ON
+			tc.status_id = ms.status_id
+		LEFT JOIN 
+			t_memo tm
+		ON
+			tc.category_id = tm.category_id
+		LEFT JOIN
+			m_status ms2
+		ON
+			tm.status_id = ms2.status_id
+		WHERE true
+			AND tc.category_id = #{categoryId}
+		ORDER BY tm.memo_id
+	</select>
+	
+	<!-- ********** 登録 ********** -->
+	<insert id="insert">
+		INSERT INTO t_category 
+			(category_name, status_id, remarks)
+		VALUES
+			(#{category.categoryName}, #{category.statusId}, #{category.remarks})
+	</insert>
+	
+	<!-- ********** 更新 ********** -->
+	<update id="update">
+		UPDATE 
+			t_category
+		SET
+			category_name = #{category.categoryName},
+			status_id = #{category.statusId},
+			remarks = #{category.remarks},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			category_id = #{category.categoryId}
+	</update>
+	
+	<!-- ********** 削除 ********** -->
+	<delete id="delete">
+		DELETE FROM
+			t_category 
+		WHERE
+			category_id = #{categoryId}
+	</delete>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.memopad.repository.MemoRepository">
+	
+	<resultMap type="com.example.memopad.entity.MemoSummary" id="memoList">
+		<id property="memoId" column="memo_id"/>
+		<result property="memoTitle" column="memo_title"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="status" javaType="com.example.memopad.entity.Status">
+			<id property="statusId" column="status_id"/>
+			<result property="statusName" column="status_name"/>
+		</association>
+	</resultMap>
+		
+	<resultMap type="com.example.memopad.entity.MemoDetail" id="memoDetail">
+		<id property="memoId" column="memo_id"/>
+		<result property="memoTitle" column="memo_title"/>
+		<result property="memoContent" column="memo_content"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<association property="status" javaType="com.example.memopad.entity.Status">
+			<id property="statusId" column="status_id"/>
+			<result property="statusName" column="status_name"/>
+		</association>
+	</resultMap>
+	
+	<!-- ********** 条件検索による一覧取得 ********** -->
+	<select id="selectListByCondition"
+		resultMap="memoList">
+		SELECT
+			tm.memo_id, tm.memo_title, tm.category_id, tm.created_at, tm.updated_at, ms.status_id, ms.status_name
+		FROM
+			t_memo tm
+		INNER JOIN 
+			m_status ms
+		ON
+			tm.status_id = ms.status_id
+		WHERE true
+			AND tm.category_id = #{memo.categoryId}
+			<if test="memo.memoId != null">
+				AND tm.memo_id = #{memo.memoId}
+			</if>
+			<if test="memo.memoTitle != null">
+				AND tm.memo_title LIKE #{memo.memoTitle}
+			</if>
+			<if test="memo.statusId != null">
+				AND tm.status_id = #{memo.statusId}
+			</if>
+			<if test="memo.createdAt != null">
+				<![CDATA[
+					AND CAST(tm.created_at AS DATE) = #{memo.createdAt}
+				]]>
+			</if>
+			<if test="memo.updatedAt != null">
+				<![CDATA[
+					AND CAST(tm.updated_at AS DATE) = #{memo.updatedAt}
+				]]>
+			</if>
+		ORDER BY tm.memo_id
+	</select>
+		
+	<!-- ********** 詳細検索 ********** -->
+	<select id="selectDetailByMemoId"
+		resultMap="memoDetail">
+		SELECT
+			tm.memo_id, tm.memo_title, tm.memo_content, tm.category_id, tm.status_id, ms.status_name, tm.created_at, tm.updated_at
+		FROM
+			t_memo tm
+		INNER JOIN 
+			m_status ms
+		ON
+			tm.status_id = ms.status_id
+		WHERE true
+			AND tm.memo_id = #{memoId}
+		ORDER BY tm.memo_id
+	</select>
+	
+	<!-- ********** 登録 ********** -->
+	<insert id="insert">
+		INSERT INTO t_memo 
+			(memo_title, memo_content, status_id, category_id)
+		VALUES
+			(#{memo.memoTitle}, #{memo.memoContent}, #{memo.statusId}, #{memo.categoryId})
+	</insert>
+	
+	<!-- ********** 更新 ********** -->
+	<update id="update">
+		UPDATE 
+			t_memo
+		SET
+			memo_title = #{memo.memoTitle},
+			memo_content = #{memo.memoContent},
+			status_id = #{memo.statusId},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			memo_id = #{memo.memoId}
+	</update>
+	
+	<!-- ********** 削除 ********** -->
+	<delete id="delete">
+		DELETE FROM
+			t_memo 
+		WHERE
+			memo_id = #{memoId}
+	</delete>
+	
+	<!-- ********** カテゴリーIDに紐づくメモ削除 ********** -->
+	<delete id="deleteByCategoryId">
+		DELETE FROM
+			t_memo 
+		WHERE
+			category_id = #{categoryId}
+	</delete>
+</mapper>

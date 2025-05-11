@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>メモ帳アプリ</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div th:object="${categoryDetailForm}">
+	<th:block th:if="*{modeFlg == 'regist'}"><h2 class="text-center m-4">カテゴリー登録確認</h2></th:block>
+	<th:block th:if="*{modeFlg == 'update'}"><h2 class="text-center m-4">カテゴリー更新確認</h2></th:block>
+	<th:block th:if="*{modeFlg == 'delete'}"><h2 class="text-center m-4">カテゴリー削除確認</h2></th:block>
+	<div class="container-fluid">
+		<table class="table">
+			<tr>
+				<th>【カテゴリーID】</th>
+				<td th:text="*{categoryId}"></td>
+			</tr>
+			<tr>
+				<th>【カテゴリー名】</th>
+				<td th:text="*{categoryName}"></td>
+			</tr>
+			<tr>
+				<th>【ステータス】</th>
+				<td th:text="*{statusId + '：' + statusName}"></td>
+			</tr>
+			<tr>
+				<th>【備考】</th>
+				<td th:text="*{remarks}"></td>
+			</tr>
+			<tr>
+				<th>【作成日】</th>
+				<td th:text="*{createdAt}"></td>
+			</tr>
+			<tr>
+				<th>【更新日】</th>
+				<td th:text="*{updatedAt}"></td>
+			</tr>
+		</table>
+	
+		<th:block th:if="*{modeFlg == 'regist'}">
+			<form th:action="@{/category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="submit" name="regist" value="登録実行" class="btn btn-primary mt-2"/>
+			</form>
+			<form th:action="@{/show-category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="submit" name="regist" value="戻る" class="btn btn-outline-secondary mt-2"/>
+			</form>
+		</th:block>
+	
+		<th:block th:if="*{modeFlg == 'update'}">
+			<form th:action="@{/category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="submit" name="update" value="更新実行" class="btn btn-primary mt-2"/>
+			</form>
+			<form th:action="@{/show-category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="hidden" th:field="*{initFlg}">
+				<input type="submit" name="update" value="戻る" class="btn btn-outline-secondary mt-2"/>
+			</form>
+		</th:block>
+	
+		<th:block th:if="*{modeFlg == 'delete'}">
+			<form th:action="@{/category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="submit" name="delete" value="削除実行" class="btn btn-primary mt-2"/>
+			</form>
+			<form th:action="@{/show-category-detail}" method="POST" th:object="${categoryDetailForm}">
+				<input type="hidden" th:field="*{categoryId}">
+				<input type="hidden" th:field="*{categoryName}">
+				<input type="hidden" th:field="*{statusId}">
+				<input type="hidden" th:field="*{statusName}">
+				<input type="hidden" th:field="*{remarks}">
+				<input type="submit" name="delete" value="戻る" class="btn btn-outline-secondary mt-2"/>
+			</form>
+		</th:block>
+	</div>
+</div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
