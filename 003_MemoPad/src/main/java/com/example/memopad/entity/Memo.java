@@ -11,6 +11,7 @@ public class Memo {
 	private String memoTitle;
 	private String memoContent;
 	private String statusId;
+	private Integer categoryId;
 	private Date createdAt;
 	private Date updatedAt;
 }

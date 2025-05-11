@@ -10,7 +10,6 @@ public class CategoryDetail {
 	private Integer categoryId;
 	private String categoryName;
 	private Status status;
-	private Integer memoId;
 	private String remarks;
 	private Date createdAt;
 	private Date updatedAt;

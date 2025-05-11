@@ -16,7 +16,6 @@
 	<resultMap type="com.example.memopad.entity.CategoryDetail" id="catgoryDetail">
 		<id property="categoryId" column="category_id"/>
 		<result property="categoryName" column="category_name"/>
-		<result property="memoId" column="memo_id"/>
 		<result property="remarks" column="remarks"/>
 		<result property="createdAt" column="created_at"/>
 		<result property="updatedAt" column="updated_at"/>
@@ -64,7 +63,7 @@
 	<select id="selectDetailByCategoryId"
 		resultMap="catgoryDetail">
 		SELECT
-			tc.category_id, tc.category_name, tc.memo_id, tc.remarks, tc.created_at, tc.updated_at, ms.status_id, ms.status_name
+			tc.category_id, tc.category_name, tc.remarks, tc.created_at, tc.updated_at, ms.status_id, ms.status_name
 		FROM
 			t_category tc
 		INNER JOIN 
