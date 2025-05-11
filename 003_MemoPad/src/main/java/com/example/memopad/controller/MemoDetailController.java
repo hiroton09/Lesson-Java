@@ -128,6 +128,8 @@ public class MemoDetailController {
 
 		form.setModeFlg(UPDATE);
 		form.setInitFlg(false);
+		form.setCreatedAt(memoDetail.getCreatedAt());
+		form.setUpdatedAt(memoDetail.getUpdatedAt());
 		
 		List<Status> statusList = statusService.findAll();
 		model.addAttribute("statusList", statusList);

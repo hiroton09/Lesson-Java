@@ -84,6 +84,16 @@
 	<input type="hidden" th:field="*{modeFlg}"/>
 	<input type="hidden" th:field="*{initFlg}"/>
 </form>
+
+
+<!-- 新規登録ボタン -->
+<div class="mb-4 mt-4 container-fluid">
+	<form th:action="@{/show-memo-detail}" method="POST" th:object="${categoryDetailForm}">
+		<input type="hidden" name="categoryId" th:value="*{categoryId}"/>
+		<input type="submit" name="regist" value="メモ登録" class="btn btn-primary"/>
+	</form>
+</div>
+
 <th:block th:if="${memoList != null}">
 	<div class="container-fluid mt-4">
 		<div>メモ一覧</div>
@@ -102,6 +112,7 @@
 				<td>
 					<form th:action="@{/show-memo-detail}" method="POST">
 						<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+						<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
 						<input type="submit" name="read" value="詳細" class="btn btn-primary"/>
 					</form>
 				</td>
@@ -113,12 +124,14 @@
 				<td>
 					<form th:action="@{/show-memo-detail}" method="POST">
 						<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+						<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
 						<input type="submit" name="update" value="更新" class="btn btn-primary"/>
 					</form>
 				</td>
 				<td>
 					<form th:action="@{/show-memo-detail}" method="POST">
 						<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+						<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
 						<input type="submit" name="delete" value="削除" class="btn btn-primary"/>
 					</form>
 				</td>

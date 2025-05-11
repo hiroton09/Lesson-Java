@@ -129,6 +129,8 @@ public class CategoryDetailController {
 
 		form.setModeFlg(UPDATE);
 		form.setInitFlg(false);
+		form.setCreatedAt(categoryDetail.getCreatedAt());
+		form.setUpdatedAt(categoryDetail.getUpdatedAt());
 
 		model.addAttribute("memoList", categoryDetail.getMemoList());
 		

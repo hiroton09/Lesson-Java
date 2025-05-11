@@ -42,7 +42,6 @@
 	
 		<th:block th:if="*{modeFlg == 'regist'}">
 			<form th:action="@{/memo-detail}" method="POST" th:object="${memoDetailForm}">
-				<input type="hidden" th:field="*{memoId}">
 				<input type="hidden" th:field="*{memoTitle}">
 				<input type="hidden" th:field="*{memoContent}">
 				<input type="hidden" th:field="*{categoryId}">
@@ -51,7 +50,6 @@
 				<input type="submit" name="regist" value="登録実行" class="btn btn-primary mt-2"/>
 			</form>
 			<form th:action="@{/show-memo-detail}" method="POST" th:object="${memoDetailForm}">
-				<input type="hidden" th:field="*{memoId}">
 				<input type="hidden" th:field="*{memoTitle}">
 				<input type="hidden" th:field="*{memoContent}">
 				<input type="hidden" th:field="*{categoryId}">
