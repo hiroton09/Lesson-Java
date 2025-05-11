@@ -40,8 +40,9 @@ public class CategoryDetailController {
 		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 		
 		form = setForm(categoryDetail, form);
-		
 		form.setModeFlg(READ);
+
+		model.addAttribute("memoList", categoryDetail.getMemoList());
 		
 		return "category-detail";
 	}
@@ -119,14 +120,17 @@ public class CategoryDetailController {
 	public String showCategoryDetailUpdate(
 			@ModelAttribute CategoryDetailForm form,
 			Model model) {
+
+		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 		
 		if(form.isInitFlg()) {
-			CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 			form = setForm(categoryDetail, form);
 		}
 
 		form.setModeFlg(UPDATE);
 		form.setInitFlg(false);
+
+		model.addAttribute("memoList", categoryDetail.getMemoList());
 		
 		List<Status> statusList = statusService.findAll();
 		model.addAttribute("statusList", statusList);
@@ -142,8 +146,12 @@ public class CategoryDetailController {
 			Model model) {
 
 		form.setModeFlg(UPDATE);
+
+		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 		
 		if(result.hasErrors()) {
+
+			model.addAttribute("memoList", categoryDetail.getMemoList());
 			
 			List<Status> statusList = statusService.findAll();
 			model.addAttribute("statusList", statusList);
@@ -151,7 +159,6 @@ public class CategoryDetailController {
 			return "category-detail";
 		}
 		
-		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 		form.setCreatedAt(categoryDetail.getCreatedAt());
 		form.setUpdatedAt(categoryDetail.getUpdatedAt());
 		
@@ -172,6 +179,9 @@ public class CategoryDetailController {
 		if(result.hasErrors()) {
 			
 			form.setModeFlg(UPDATE);
+			
+			CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
+			model.addAttribute("memoList", categoryDetail.getMemoList());
 			
 			List<Status> statusList = statusService.findAll();
 			model.addAttribute("statusList", statusList);
@@ -198,8 +208,9 @@ public class CategoryDetailController {
 		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 		
 		form = setForm(categoryDetail, form);
-		
 		form.setModeFlg(DELETE);
+		
+		model.addAttribute("memoList", categoryDetail.getMemoList());
 		
 		return "category-detail";
 	}
@@ -214,8 +225,9 @@ public class CategoryDetailController {
 		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
 		
 		form = setForm(categoryDetail, form);
-
 		form.setModeFlg(DELETE);
+		
+		model.addAttribute("memoList", categoryDetail.getMemoList());
 		
 		return "category-detail-confirm";
 	}

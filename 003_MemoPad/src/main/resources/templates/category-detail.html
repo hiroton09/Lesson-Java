@@ -84,6 +84,52 @@
 	<input type="hidden" th:field="*{modeFlg}"/>
 	<input type="hidden" th:field="*{initFlg}"/>
 </form>
+<th:block th:if="${memoList != null}">
+	<div class="container-fluid mt-4">
+		<div>メモ一覧</div>
+		<table class="table table-hover">
+			<tr class="table-primary">
+				<th>詳細</th>
+				<th>メモID</th>
+				<th>メモタイトル</th>
+				<th>ステータス</th>
+				<th>作成日</th>
+				<th>更新日</th>
+				<th>更新</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="memo: ${memoList}">
+				<td>
+					詳細
+	<!--						<form th:action="@{/show-category-detail}" method="POST">-->
+	<!--							<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>-->
+	<!--							<input type="submit" name="read" value="詳細" class="btn btn-primary"/>-->
+	<!--						</form>-->
+				</td>
+				<td th:text="${memo.memoId}"></td>
+				<td th:text="${memo.memoTitle}"></td>
+				<td th:text="${memo.statusId}"></td>
+	<!--					<td th:text="${memo.status.statusId + '：' + memo.status.statusName}"></td>-->
+				<td th:text="${memo.createdAt}"></td>
+				<td th:text="${memo.updatedAt}"></td>
+				<td>
+					更新
+	<!--						<form th:action="@{/show-category-detail}" method="POST">-->
+	<!--							<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>-->
+	<!--							<input type="submit" name="update" value="更新" class="btn btn-primary"/>-->
+	<!--						</form>-->
+				</td>
+				<td>
+					削除
+	<!--						<form th:action="@{/show-category-detail}" method="POST">-->
+	<!--							<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>-->
+	<!--							<input type="submit" name="delete" value="削除" class="btn btn-primary"/>-->
+	<!--						</form>-->
+				</td>
+			</tr>
+		</table>
+	</div>
+</th:block>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/js/main.js}"></script>

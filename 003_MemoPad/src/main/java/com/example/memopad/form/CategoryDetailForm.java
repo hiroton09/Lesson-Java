@@ -1,8 +1,11 @@
 package com.example.memopad.form;
 
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.validation.constraints.Size;
+
+import com.example.memopad.entity.Memo;
 
 import lombok.Data;
 
@@ -20,4 +23,5 @@ public class CategoryDetailForm {
 	private Date updatedAt;
 	private String modeFlg;
 	private boolean initFlg = true;
+	private List<Memo> memoList;
 }

@@ -23,6 +23,14 @@
 			<id property="statusId" column="status_id"/>
 			<result property="statusName" column="status_name"/>
 		</association>
+		<collection property="memoList" ofType="com.example.memopad.entity.Memo">
+			<id property="memoId" column="memo_id"/>
+			<result property="memoTitle" column="memo_title"/>
+			<result property="memoContent" column="memo_content"/>
+			<result property="statusId" column="tm_status_id"/>
+			<result property="createdAt" column="tm_created_at"/>
+			<result property="updatedAt" column="tm_updated_at"/>
+		</collection>
 	</resultMap>
 	
 	<!-- ********** 条件検索による一覧取得 ********** -->
@@ -63,15 +71,21 @@
 	<select id="selectDetailByCategoryId"
 		resultMap="catgoryDetail">
 		SELECT
-			tc.category_id, tc.category_name, tc.remarks, tc.created_at, tc.updated_at, ms.status_id, ms.status_name
+			tc.category_id, tc.category_name, tc.remarks, tc.created_at, tc.updated_at, ms.status_id, ms.status_name,
+			tm.memo_id, tm.memo_title, tm.memo_content, tm.status_id tm_status_id, tm.created_at tm_created_at, tm.updated_at tm_updated_at
 		FROM
 			t_category tc
 		INNER JOIN 
 			m_status ms
 		ON
 			tc.status_id = ms.status_id
+		LEFT JOIN 
+			t_memo tm
+		ON
+			tc.category_id = tm.category_id
 		WHERE true
 			AND tc.category_id = #{categoryId}
+		ORDER BY tm.memo_id
 	</select>
 	
 	<!-- ********** 登録 ********** -->
