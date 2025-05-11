@@ -12,4 +12,11 @@ public class CommonController {
 		
 		return "category-complete";
 	}
+	
+	// メモ関連の処理完了後のリダイレクト先
+	@GetMapping("/memo-complete")
+	public String completeMemo() {
+		
+		return "memo-complete";
+	}
 }

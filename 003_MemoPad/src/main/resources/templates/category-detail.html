@@ -100,11 +100,10 @@
 			</tr>
 			<tr th:each="memo: ${memoList}">
 				<td>
-					詳細
-	<!--						<form th:action="@{/show-category-detail}" method="POST">-->
-	<!--							<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>-->
-	<!--							<input type="submit" name="read" value="詳細" class="btn btn-primary"/>-->
-	<!--						</form>-->
+					<form th:action="@{/show-memo-detail}" method="POST">
+						<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+						<input type="submit" name="read" value="詳細" class="btn btn-primary"/>
+					</form>
 				</td>
 				<td th:text="${memo.memoId}"></td>
 				<td th:text="${memo.memoTitle}"></td>
@@ -112,18 +111,16 @@
 				<td th:text="${memo.createdAt}"></td>
 				<td th:text="${memo.updatedAt}"></td>
 				<td>
-					更新
-	<!--						<form th:action="@{/show-category-detail}" method="POST">-->
-	<!--							<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>-->
-	<!--							<input type="submit" name="update" value="更新" class="btn btn-primary"/>-->
-	<!--						</form>-->
+					<form th:action="@{/show-memo-detail}" method="POST">
+						<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+						<input type="submit" name="update" value="更新" class="btn btn-primary"/>
+					</form>
 				</td>
 				<td>
-					削除
-	<!--						<form th:action="@{/show-category-detail}" method="POST">-->
-	<!--							<input type="hidden" name="categoryId" th:value="${category.categoryId}"/>-->
-	<!--							<input type="submit" name="delete" value="削除" class="btn btn-primary"/>-->
-	<!--						</form>-->
+					<form th:action="@{/show-memo-detail}" method="POST">
+						<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+						<input type="submit" name="delete" value="削除" class="btn btn-primary"/>
+					</form>
 				</td>
 			</tr>
 		</table>
