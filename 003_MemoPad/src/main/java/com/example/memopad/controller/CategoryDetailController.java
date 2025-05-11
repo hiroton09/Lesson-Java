@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.memopad.entity.Category;
 import com.example.memopad.entity.CategoryDetail;
+import com.example.memopad.entity.Memo;
+import com.example.memopad.entity.MemoSummary;
 import com.example.memopad.entity.Status;
 import com.example.memopad.form.CategoryDetailForm;
 import com.example.memopad.service.CategoryService;
@@ -45,6 +47,9 @@ public class CategoryDetailController {
 		form.setModeFlg(READ);
 
 		model.addAttribute("memoList", categoryDetail.getMemoList());
+		
+		List<Status> statusList = statusService.findAll();
+		model.addAttribute("statusList", statusList);
 		
 		return "category-detail";
 	}
@@ -251,6 +256,41 @@ public class CategoryDetailController {
 		redirectAttributes.addFlashAttribute("msg", "カテゴリー削除完了");
 		
 		return "redirect:/category-complete";
+	}
+	
+	// 条件検索によるメモ一覧表示
+	@PostMapping("/memo-search-list")
+	public String selectMemoList(
+			@Validated @ModelAttribute CategoryDetailForm form,
+			BindingResult result,
+			Model model) {
+		
+		CategoryDetail categoryDetail = categoryService.findDetailByCategoryId(form.getCategoryId());
+		
+		form = setForm(categoryDetail, form);
+		form.setModeFlg(READ);
+
+		// 検索パラメータをもとにDB検索
+		// form → entity
+		Memo memo = new Memo();
+		memo.setMemoId(form.getMemoSearchListForm().getMemoId());
+		if(!form.getMemoSearchListForm().getMemoTitle().equals("")) {
+			memo.setMemoTitle("%" + form.getMemoSearchListForm().getMemoTitle() + "%");			
+		}
+		if(!form.getMemoSearchListForm().getStatusId().equals("")) {
+			memo.setStatusId(form.getMemoSearchListForm().getStatusId());
+		}
+		memo.setCreatedAt(form.getMemoSearchListForm().getCreatedAt());
+		memo.setUpdatedAt(form.getMemoSearchListForm().getUpdatedAt());
+		memo.setCategoryId(form.getCategoryId());
+		
+		List<MemoSummary> memoList = memoService.findListByCondition(memo);
+		
+		List<Status> statusList = statusService.findAll();
+		model.addAttribute("statusList", statusList);
+		model.addAttribute("memoList", memoList);
+		
+		return "category-detail";
 	}
 	
 	

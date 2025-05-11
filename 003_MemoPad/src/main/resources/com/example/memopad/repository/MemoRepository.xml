@@ -31,7 +31,7 @@
 	<select id="selectListByCondition"
 		resultMap="memoList">
 		SELECT
-			tm.memo_id, tm.category_title, tm.category_id, tm.created_at, tm.updated_at, ms.status_id, ms.status_name
+			tm.memo_id, tm.memo_title, tm.category_id, tm.created_at, tm.updated_at, ms.status_id, ms.status_name
 		FROM
 			t_memo tm
 		INNER JOIN 
@@ -39,6 +39,7 @@
 		ON
 			tm.status_id = ms.status_id
 		WHERE true
+			AND tm.category_id = #{memo.categoryId}
 			<if test="memo.memoId != null">
 				AND tm.memo_id = #{memo.memoId}
 			</if>

@@ -85,68 +85,113 @@
 	<input type="hidden" th:field="*{initFlg}"/>
 </form>
 
-
-<!-- メモ新規登録ボタン -->
+<!-- 検索フォーム -->
 <th:block th:object="${categoryDetailForm}">
-	<th:block th:if="*{modeFlg == 'read' || modeFlg == 'update'}">
-		<div class="mb-4 mt-4 container-fluid">
-			<form th:action="@{/show-memo-detail}" method="POST">
-				<input type="hidden" name="categoryId" th:value="*{categoryId}"/>
-				<input type="submit" name="regist" value="メモ登録" class="btn btn-primary"/>
-			</form>
-		</div>
-	</th:block>
-</th:block>
-
-<th:block th:if="${memoList != null}">
-	<div class="container-fluid mt-4" th:object="${categoryDetailForm}">
-		<div>メモ一覧</div>
-		<table class="table table-hover">
-			<tr class="table-primary">
-				<th:block th:if="*{modeFlg == 'read'}"><th>詳細</th></th:block>
-				<th>メモID</th>
-				<th>メモタイトル</th>
-				<th>ステータス</th>
-				<th>作成日</th>
-				<th>更新日</th>
-				<th:block th:if="*{modeFlg == 'read'}"><th>更新</th></th:block>
-				<th:block th:if="*{modeFlg == 'read'}"><th>削除</th></th:block>
-			</tr>
-			<tr th:each="memo: ${memoList}">
-				<th:block th:if="*{modeFlg == 'read'}">
-					<td>
-						<form th:action="@{/show-memo-detail}" method="POST">
-							<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
-							<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
-							<input type="submit" name="read" value="詳細" class="btn btn-primary"/>
-						</form>
-					</td>
-				</th:block>
-				<td th:text="${memo.memoId}"></td>
-				<td th:text="${memo.memoTitle}"></td>
-				<td th:text="${memo.status.statusId + '：' + memo.status.statusName}"></td>
-				<td th:text="${memo.createdAt}"></td>
-				<td th:text="${memo.updatedAt}"></td>
-				<th:block th:if="*{modeFlg == 'read'}">
-					<td>
-						<form th:action="@{/show-memo-detail}" method="POST">
-							<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
-							<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
-							<input type="submit" name="update" value="更新" class="btn btn-primary"/>
-						</form>
-					</td>
-				</th:block>
-				<th:block th:if="*{modeFlg == 'read'}">
-					<td>
-						<form th:action="@{/show-memo-detail}" method="POST">
-							<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
-							<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
-							<input type="submit" name="delete" value="削除" class="btn btn-primary"/>
-						</form>
-					</td>
-				</th:block>
-			</tr>
-		</table>
+	<div class="container-fluid" th:if="*{modeFlg == 'read'}">
+		<th:block th:if="${memoList != null}">
+			<div class="mb-4 mt-4 border-top">
+				<h3 class="my-4 text-center">メモ一覧</h3>
+				<form th:action="@{/memo-search-list}" method="POST" th:object="${categoryDetailForm}">
+					<table class="table">
+						<tr>
+							<th>【メモID】</th>
+							<td><input type="number" th:field="*{memoSearchListForm.memoId}"></td>
+						</tr>					
+						<tr>
+							<th>【メモタイトル】</th>
+							<td><input type="text" th:field="*{memoSearchListForm.memoTitle}"></td>
+						</tr>
+						<tr>
+							<th>【ステータス】</th>
+							<td>
+								<select th:field="*{memoSearchListForm.statusId}">
+									<option value="">（すべて）</option>
+									<option th:each="status: ${statusList}"
+											th:value="${status.statusId}"
+											th:text="${status.statusId + '：' + status.statusName}"
+											th:selected="${status.statusId == statusId}">
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>【作成日】</th>
+							<td><input type="date" th:field="*{memoSearchListForm.createdAt}"></td>
+						</tr>
+						<tr>
+							<th>【更新日】</th>
+							<td><input type="date" th:field="*{memoSearchListForm.updatedAt}"></td>
+						</tr>
+					</table>
+					<input type="hidden" name="categoryId" th:value="*{categoryId}"/>
+					<input type="submit" value="検索" class="btn btn-primary mt-2"/>
+				</form>
+			</div>
+		</th:block>
+	
+		<!-- メモ新規登録ボタン -->
+		<th:block th:object="${categoryDetailForm}">
+			<th:block th:if="*{modeFlg == 'read' || modeFlg == 'update'}">
+				<div class="mb-4 mt-4">
+					<form th:action="@{/show-memo-detail}" method="POST">
+						<input type="hidden" name="categoryId" th:value="*{categoryId}"/>
+						<input type="submit" name="regist" value="メモ登録" class="btn btn-primary"/>
+					</form>
+				</div>
+			</th:block>
+		</th:block>
+		
+		<th:block th:if="${memoList != null}">
+			<div class="mt-4" th:object="${categoryDetailForm}">
+				<div>メモ一覧</div>
+				<table class="table table-hover">
+					<tr class="table-primary">
+						<th:block th:if="*{modeFlg == 'read'}"><th>詳細</th></th:block>
+						<th>メモID</th>
+						<th>メモタイトル</th>
+						<th>ステータス</th>
+						<th>作成日</th>
+						<th>更新日</th>
+						<th:block th:if="*{modeFlg == 'read'}"><th>更新</th></th:block>
+						<th:block th:if="*{modeFlg == 'read'}"><th>削除</th></th:block>
+					</tr>
+					<tr th:each="memo: ${memoList}">
+						<th:block th:if="*{modeFlg == 'read'}">
+							<td>
+								<form th:action="@{/show-memo-detail}" method="POST">
+									<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+									<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
+									<input type="submit" name="read" value="詳細" class="btn btn-primary"/>
+								</form>
+							</td>
+						</th:block>
+						<td th:text="${memo.memoId}"></td>
+						<td th:text="${memo.memoTitle}"></td>
+						<td th:text="${memo.status.statusId + '：' + memo.status.statusName}"></td>
+						<td th:text="${memo.createdAt}"></td>
+						<td th:text="${memo.updatedAt}"></td>
+						<th:block th:if="*{modeFlg == 'read'}">
+							<td>
+								<form th:action="@{/show-memo-detail}" method="POST">
+									<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+									<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
+									<input type="submit" name="update" value="更新" class="btn btn-primary"/>
+								</form>
+							</td>
+						</th:block>
+						<th:block th:if="*{modeFlg == 'read'}">
+							<td>
+								<form th:action="@{/show-memo-detail}" method="POST">
+									<input type="hidden" name="memoId" th:value="${memo.memoId}"/>
+									<input type="hidden" name="categoryId" th:value="${memo.categoryId}"/>
+									<input type="submit" name="delete" value="削除" class="btn btn-primary"/>
+								</form>
+							</td>
+						</th:block>
+					</tr>
+				</table>
+			</div>
+		</th:block>
 	</div>
 </th:block>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

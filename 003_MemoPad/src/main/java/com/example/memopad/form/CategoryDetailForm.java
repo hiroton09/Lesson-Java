@@ -24,4 +24,5 @@ public class CategoryDetailForm {
 	private String modeFlg;
 	private boolean initFlg = true;
 	private List<MemoSummary> memoList;
+	private MemoSearchListForm memoSearchListForm;
 }
