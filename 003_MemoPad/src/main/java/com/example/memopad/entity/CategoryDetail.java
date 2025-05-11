@@ -14,6 +14,6 @@ public class CategoryDetail {
 	private String remarks;
 	private Date createdAt;
 	private Date updatedAt;
-	private List<Memo> memoList;
+	private List<MemoSummary> memoList;
 	
 }

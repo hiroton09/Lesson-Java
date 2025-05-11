@@ -5,7 +5,7 @@ import java.util.List;
 
 import jakarta.validation.constraints.Size;
 
-import com.example.memopad.entity.Memo;
+import com.example.memopad.entity.MemoSummary;
 
 import lombok.Data;
 
@@ -23,5 +23,5 @@ public class CategoryDetailForm {
 	private Date updatedAt;
 	private String modeFlg;
 	private boolean initFlg = true;
-	private List<Memo> memoList;
+	private List<MemoSummary> memoList;
 }
