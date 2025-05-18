@@ -7,8 +7,12 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.example.weatherreport.common.GetApiResponse;
+import com.example.weatherreport.common.GetJsonResource;
 import com.example.weatherreport.common.WeatherConst;
+import com.example.weatherreport.entity.WeatherDetail;
 import com.example.weatherreport.entity.WeatherInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,6 +25,7 @@ public class WeatherServiceImp implements WeatherService {
 	private final static String AREA = "area";
 	private final static String AREA_NAME = "name";
 	private final static String WEATHERS = "weatherCodes";
+	private final static String WEATHER_CODE_LiST = "weather_code_list";
 
 	// 天気情報取得
 	@Override
@@ -39,11 +44,6 @@ public class WeatherServiceImp implements WeatherService {
 			if(WeatherConst.STAUS_CODE_200.equals(response.get(WeatherConst.RESPONSE_CODE))) {
 				
 				String responseBody = response.get(WeatherConst.RESPONSE_BODY);
-//				
-//				String repResponseBody = responseBody.substring(1);
-//				repResponseBody = responseBody.substring(0, repResponseBody.length() - 1);
-//				JsonNode rootNode = mapper.readTree(repResponseBody);
-//				System.out.println("レスポンスボディ：" + repResponseBody);
 				
 				JsonNode rootNode = mapper.readTree(responseBody);
 				
@@ -65,6 +65,11 @@ public class WeatherServiceImp implements WeatherService {
 					// 天気情報
 					JsonNode weathers = areas.get(0).get(WEATHERS);
 					weatherInfo.setWeatherCode(weathers.get(i).asText());
+					
+					// 天気コードに紐づく天気名を取得
+					WeatherDetail weatherDetail = getWeatherDetail(weathers.get(i).asText());
+					weatherInfo.setWeatherName(weatherDetail.getWeatherName());
+					weatherInfo.setWeatherIcon(weatherDetail.getIconDayTime());
 
 					resultList.add(weatherInfo);
 					
@@ -82,6 +87,25 @@ public class WeatherServiceImp implements WeatherService {
 		return resultList;
 	}
 	
-	
+	// 天気情報を取得
+	private WeatherDetail getWeatherDetail(String weatherCode) throws JsonMappingException, JsonProcessingException {
+		
+		GetJsonResource getJsonResource = new GetJsonResource();
+		String weatherCodeList = getJsonResource.getJson(WEATHER_CODE_LiST);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode rootNode = mapper.readTree(weatherCodeList);
+		
+		JsonNode weatherNode = rootNode.get(weatherCode);
+		
+		WeatherDetail weatherDetail = new WeatherDetail();
+		weatherDetail.setIconDayTime(weatherNode.get(0).asText());
+		weatherDetail.setIconDayNight(weatherNode.get(1).asText());
+		weatherDetail.setCode(weatherNode.get(2).asText());
+		weatherDetail.setWeatherName(weatherNode.get(3).asText());
+		weatherDetail.setWeatherNameEnglish(weatherNode.get(4).asText());
+		
+		return weatherDetail;
+	}
 
 }

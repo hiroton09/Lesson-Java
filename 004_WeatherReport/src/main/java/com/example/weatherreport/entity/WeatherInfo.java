@@ -9,4 +9,5 @@ public class WeatherInfo {
 	private String areaName;
 	private String weatherCode;
 	private String weatherName;
+	private String weatherIcon;
 }

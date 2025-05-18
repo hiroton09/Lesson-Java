@@ -48,11 +48,13 @@
 				<th>エリア</th>
 				<th>日付</th>
 				<th>天気情報</th>
+				<th></th>
 			</tr>
 			<tr th:each="weatherInfo: ${weatherInfoList}">
 				<td th:text="${weatherInfo.areaName}"></td>
 				<td th:text="${weatherInfo.timeDefine}"></td>
-				<td th:text="${weatherInfo.weatherCode}"></td>
+				<td><img th:src="${'https://www.jma.go.jp/bosai/forecast/img/' + weatherInfo.weatherIcon}" /></td>
+				<td th:text="${weatherInfo.weatherCode + '：' + weatherInfo.weatherName}"></td>
 			</tr>
 		</table>
 	</div>
