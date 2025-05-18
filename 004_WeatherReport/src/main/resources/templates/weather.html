@@ -8,8 +8,54 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
+	<h2>天気情報検索</h2>
 	
+	<!-- 検索フォーム -->
+	<form th:action="@{/search-weather}" method="POST" th:object="${searchWeatherForm}">
+		<table class="table">
+			<tr>
+				<th>【エリア】</th>
+				<td><input type="text" th:field="*{area}"></td>
+			</tr>
+<!--				<th>【ステータス】</th>-				<td>-->
+<!--					<select th:field="*{staI-->
+<!--						<option value="">（すべて）<t-->
+<!--						<option th:each="status: ${statusList}"-->
+<!--		h:value="${status.statusId}"-->
+<!--								th:text="t.statusId + '：'ss.statusName}"
+								teed="${st
+			<tr>
+				<th>【作成日】</th>
+				<td><input type="date" th:field="*{createdAt}"></td>
+			</tr>
+			<tr>
+				<th>【更新日】</th>
+				<td><input type="date" th:field="*{updatedAt}"></td>
+			</tr>s.statusId == statusId}">-->
+<!--						</option>-->
+<!--					</select>-->
+<!--				</td>-->
+<!--			</tr>-->
+		</table>
+		<input type="submit" value="検索" class="btn btn-primary mt-2"/>
+	</form>
 	
+	<!-- 検索結果 -->
+	<div th:if="${weatherInfoList} != null">
+		<div>天気情報</div>
+		<table class="table table-hover">
+			<tr class="table-primary">
+				<th>エリア</th>
+				<th>日付</th>
+				<th>天気情報</th>
+			</tr>
+			<tr th:each="weatherInfo: ${weatherInfoList}">
+				<td th:text="${weatherInfo.areaName}"></td>
+				<td th:text="${weatherInfo.timeDefine}"></td>
+				<td th:text="${weatherInfo.weatherCode}"></td>
+			</tr>
+		</table>
+	</div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/js/main.js}"></script>
