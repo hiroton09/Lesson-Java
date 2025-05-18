@@ -8,7 +8,8 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-	<h2>天気情報検索</h2>
+<div class="container-fluid">
+	<h2 class="text-center m-4">天気情報検索</h2>
 	
 	<!-- 検索フォーム -->
 	<form th:action="@{/search-weather}" method="POST" th:object="${searchWeatherForm}">
@@ -43,21 +44,34 @@
 	<!-- 検索結果 -->
 	<div th:if="${weatherInfoList} != null">
 		<div>天気情報</div>
-		<table class="table table-hover">
-			<tr class="table-primary">
-				<th>エリア</th>
-				<th>日付</th>
-				<th>天気情報</th>
-				<th></th>
-			</tr>
-			<tr th:each="weatherInfo: ${weatherInfoList}">
-				<td th:text="${weatherInfo.areaName}"></td>
-				<td th:text="${weatherInfo.timeDefine}"></td>
-				<td><img th:src="${'https://www.jma.go.jp/bosai/forecast/img/' + weatherInfo.weatherIcon}" /></td>
-				<td th:text="${weatherInfo.weatherCode + '：' + weatherInfo.weatherName}"></td>
-			</tr>
-		</table>
+		<div class="card-group">
+			<th:block th:each="weatherInfo: ${weatherInfoList}">
+				<div class="card border-info rounded-4 p-2">
+				  <img th:src="${'https://www.jma.go.jp/bosai/forecast/img/' + weatherInfo.weatherIcon}" class="card-img-top">
+				  <div class="card-body">
+				    <h5 class="card-title" th:text="${weatherInfo.areaName}"></h5>
+				    <p class="card-text" th:text="${weatherInfo.timeDefine}"></p>
+				    <p class="card-text" th:text="${weatherInfo.weatherCode + '：' + weatherInfo.weatherName}"></p>
+				  </div>
+				</div>
+			</th:block>
+		</div>
+<!--		<table class="table table-hover">-->
+<!--			<tr class="table-primary">-->
+<!--				<th>エリア</th>-->
+<!--				<th>日付</th>-->
+<!--				<th>天気情報</th>-->
+<!--				<th></th>-->
+<!--			</tr>-->
+<!--			<tr th:each="weatherInfo: ${weatherInfoList}">-->
+<!--				<td th:text="${weatherInfo.areaName}"></td>-->
+<!--				<td th:text="${weatherInfo.timeDefine}"></td>-->
+<!--				<td><img th:src="${'https://www.jma.go.jp/bosai/forecast/img/' + weatherInfo.weatherIcon}" /></td>-->
+<!--				<td th:text="${weatherInfo.weatherCode + '：' + weatherInfo.weatherName}"></td>-->
+<!--			</tr>-->
+<!--		</table>-->
 	</div>
+</div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/js/main.js}"></script>

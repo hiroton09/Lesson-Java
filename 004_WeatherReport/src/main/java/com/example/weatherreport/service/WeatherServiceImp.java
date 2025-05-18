@@ -55,7 +55,8 @@ public class WeatherServiceImp implements WeatherService {
 					WeatherInfo weatherInfo = new WeatherInfo();
 					
 					// 日付情報
-					weatherInfo.setTimeDefine(timeDefine.asText());
+					String strTimeDefine = timeDefine.asText().substring(0, 10);
+					weatherInfo.setTimeDefine(strTimeDefine);
 
 					// エリア情報
 					JsonNode areas = timeSeries.get(0).get(AREAS);
