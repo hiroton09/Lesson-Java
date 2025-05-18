@@ -25,13 +25,12 @@ public class WeatherServiceImp implements WeatherService {
 	private final static String AREA = "area";
 	private final static String AREA_NAME = "name";
 	private final static String WEATHERS = "weatherCodes";
-	private final static String WEATHER_CODE_LiST = "weather_code_list";
 
 	// 天気情報取得
 	@Override
-	public List<WeatherInfo> getWeather(String selectArea) {
+	public List<WeatherInfo> getWeather(String selectAreaCode) {
 		
-		String url = WeatherConst.WEATHER_API_URL + selectArea + WeatherConst.WEATHER_API_URL_END;
+		String url = WeatherConst.WEATHER_API_URL + selectAreaCode + WeatherConst.WEATHER_API_URL_END;
 		
 		List<WeatherInfo> resultList = new ArrayList<WeatherInfo>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -92,7 +91,7 @@ public class WeatherServiceImp implements WeatherService {
 	private WeatherDetail getWeatherDetail(String weatherCode) throws JsonMappingException, JsonProcessingException {
 		
 		GetJsonResource getJsonResource = new GetJsonResource();
-		String weatherCodeList = getJsonResource.getJson(WEATHER_CODE_LiST);
+		String weatherCodeList = getJsonResource.getJson(WeatherConst.WEATHER_CODE_LiST);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.readTree(weatherCodeList);

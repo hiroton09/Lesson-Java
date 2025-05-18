@@ -7,5 +7,5 @@ import com.example.weatherreport.entity.WeatherInfo;
 public interface WeatherService {
 
 	// 天気情報取得
-	public List<WeatherInfo> getWeather(String area);
+	public List<WeatherInfo> getWeather(String selectAreaCode);
 }

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.weatherreport.entity.Area;
 import com.example.weatherreport.entity.WeatherInfo;
 import com.example.weatherreport.form.SearchWeatherForm;
+import com.example.weatherreport.service.AreaService;
 import com.example.weatherreport.service.WeatherService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,11 +21,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WeatherController {
 	
+	private final AreaService areaService;
 	private final WeatherService weatherService;
 	
 	// 表示リクエスト
 	@GetMapping("/top")
 	public String showWeather(@ModelAttribute SearchWeatherForm form, Model model) {
+		
+		List<Area> areaList = areaService.getAreaList();
+		model.addAttribute("areaList", areaList);
+		
 		return "weather";
 	}
 
@@ -31,8 +38,10 @@ public class WeatherController {
 	@PostMapping("/search-weather")
 	public String searchWeather(@Validated @ModelAttribute SearchWeatherForm form, Model model) {
 		
-		List<WeatherInfo> weatherInfoList = weatherService.getWeather(form.getArea());
+		List<Area> areaList = areaService.getAreaList();
+		model.addAttribute("areaList", areaList);
 		
+		List<WeatherInfo> weatherInfoList = weatherService.getWeather(form.getAreaCode());
 		model.addAttribute("weatherInfoList", weatherInfoList);
 		
 		return "weather";

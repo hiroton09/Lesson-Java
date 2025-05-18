@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class SearchWeatherForm {
 	
-	private String area;
+	private String areaCode;
 }
