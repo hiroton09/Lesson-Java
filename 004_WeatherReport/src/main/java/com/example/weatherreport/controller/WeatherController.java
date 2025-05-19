@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.weatherreport.entity.Area;
+import com.example.weatherreport.entity.WeatherChart;
 import com.example.weatherreport.entity.WeatherInfo;
 import com.example.weatherreport.form.SearchWeatherForm;
 import com.example.weatherreport.service.AreaService;
@@ -43,6 +44,9 @@ public class WeatherController {
 		
 		List<WeatherInfo> weatherInfoList = weatherService.getWeather(form.getAreaCode());
 		model.addAttribute("weatherInfoList", weatherInfoList);
+		
+		WeatherChart weathweChart = weatherService.getWeatherChart(form.getAreaCode());
+		model.addAttribute("weathweChart", weathweChart);
 		
 		return "weather";
 	}

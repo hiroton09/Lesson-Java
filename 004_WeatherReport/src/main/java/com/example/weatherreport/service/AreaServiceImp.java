@@ -36,11 +36,11 @@ public class AreaServiceImp implements AreaService {
 			JsonNode officesNode = rootNode.get(OFFICES);
 			
 			// エリアリスト作成
-			// エリア情報取得
-			
 			if (officesNode.isObject()) {
 				Iterator<Map.Entry<String, JsonNode>> fields = officesNode.fields();
 					while (fields.hasNext()) {
+
+					// エリア情報取得
 					Map.Entry<String, JsonNode> officeEntry = fields.next();
 					String officeCode = officeEntry.getKey();
 					JsonNode officeData = officeEntry.getValue();
