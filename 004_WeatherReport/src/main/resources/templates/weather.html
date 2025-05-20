@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>天気予報表示アプリ</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+	<h2 class="text-center m-4">天気情報検索</h2>
+	
+	<!-- 検索フォーム -->
+	<form th:action="@{/search-weather}" method="POST" th:object="${searchWeatherForm}" class="text-center">
+		<table class="table">
+			<tr class="text-center">
+				<th>【エリア】</th>
+			</tr>
+			<tr class="text-center">
+				<td>
+					<select class="form-select" th:field="*{areaCode}">
+						<option th:each="area: ${areaList}"
+							th:value="${area.areaCode}"
+							th:text="${area.areaCode + '：' + area.areaName}"
+							th:selected="${area.areaCode == areaCode}">
+						</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<input type="submit" value="検索" class="btn btn-primary mt-2 text-center"/>
+	</form>
+	
+	<!-- 検索結果 -->
+	<div th:if="${weatherInfoList} != null">
+		<div class="mt-4 pt-4 border-top">天気情報</div>
+		<div class="card-group">
+			<th:block th:each="weatherInfo: ${weatherInfoList}">
+				<div class="card border-info rounded-4 p-2">
+				  <img th:src="${'https://www.jma.go.jp/bosai/forecast/img/' + weatherInfo.weatherIcon}" class="card-img-top">
+				  <div class="card-body">
+				    <h5 class="card-title" th:text="${weatherInfo.areaName}"></h5>
+				    <p class="card-text" th:text="${weatherInfo.timeDefine}"></p>
+				    <p class="card-text" th:text="${weatherInfo.weatherCode + '：' + weatherInfo.weatherName}"></p>
+				  </div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+	
+	<!-- グラフ表示 -->
+	<canvas id="chart" class="mt-4"></canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var ctx = document.getElementById("chart");
+	var myLineChart = new Chart(ctx, {
+		// グラフの種類：折れ線グラフを指定
+		type: 'line',
+		data: {
+			// x軸の各メモリ
+			labels: /*[[${weathweChart.date}]]*/"date",
+			datasets: [
+				{
+					label: '最高気温(度）',
+					data: /*[[${weathweChart.tempsMax}]]*/"tempsMax",
+					borderColor: "#ec4343",
+					backgroundColor: "#00000000",
+					lineTension: 0,
+				},
+				{
+					label: '最低気温(度）',
+					data: /*[[${weathweChart.tempsMin}]]*/"tempsMin",
+					borderColor: "#2260ea",
+					backgroundColor: "#00000000",
+					lineTension: 0,
+				}
+			],
+		},
+		options: {
+			title: {
+				display: true,
+				text: /*[[${weathweChart.chartTitle}]]*/"chartTitle",
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						suggestedMax: 40,
+						suggestedMin: 15,
+						stepSize: 10,  // 縦メモリのステップ数
+						callback: function(value, index, values) {
+							return value + '度'  // 各メモリのステップごとの表記（valueは各ステップの値）
+						}
+					}
+				}]
+			},
+		}
+	});
+	/*]]>*/
+</script>
+</body>
+</html>
