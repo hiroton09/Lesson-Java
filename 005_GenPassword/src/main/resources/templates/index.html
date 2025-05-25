@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>パスワードジェネレーター</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="conatiner mt-4 col-md-10 mx-auto">
+	<div class="mb-4">
+		<h2 class="mb-2">パスワードジェネレーター</h2>
+		<p class="text-secondary">以下の項目を選択し、生成する文字数を入力して生成ボタンを押下<br>
+		設定した情報をもとにパスワードが生成されます！</p>
+	</div>
+	
+	<!-- チェックボックス -->
+	<form th:action="@{/gen-password}" method="POST" th:object="${genTypeForm}">
+		<h3>項目設定</h3>
+		<div th:if="${ERR_MSG != null}">
+			<div th:text="${ERR_MSG}" class="alert alert-danger" role="alert"></div>
+		</div>
+		<div class="mt-4 mb-4">
+			<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="checkbox" th:field="*{largeWord}">
+			  <label class="form-check-label" for="largeWord">大文字</label>
+			</div>
+			<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="checkbox" th:field="*{smallWord}">
+			  <label class="form-check-label" for="smallWord">小文字</label>
+			</div>
+			<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="checkbox" th:field="*{number}">
+			  <label class="form-check-label" for="number">数字</label>
+			</div>
+			<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="checkbox" th:field="*{symbol}">
+			  <label class="form-check-label" for="symbol">記号</label>
+			</div>
+		</div>
+		<div class="mb-4 d-flex align-items-center">
+			<p class="mb-0 col-md-3 col-sm-3">文字数を入力</p>
+			<input type="number" min="0" th:field="*{count}" class="form-control"/>
+		</div>
+		<input type="submit" value="生成" class="btn btn-primary col-2" />
+	</form>
+	
+	<div class="mt-4 mb-4">
+		<h3>生成されたパスワード</h3>
+		<th:block th:if="${genPassword != null}">
+			<div id="genPassword" th:text="${genPassword}" class="mt-4 alert alert-secondary text-break"></div>
+			<button id="copyTextBtn" class="btn btn-outline-info mt-2">クリップボードへコピー</button>
+		</th:block>
+	</div>
+</div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
