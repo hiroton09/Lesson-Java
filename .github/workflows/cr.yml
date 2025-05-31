@@ -15,6 +15,10 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'gptReview')
     runs-on: ubuntu-latest
     steps:
+      # ここに環境変数を追加します
+      - name: Set up debug mode
+        run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+
       - uses: anc95/ChatGPT-CodeReview@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
