@@ -8,12 +8,13 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     paths:
-      - "**.java"
-      - "**.html"
-      - "**.css"
-      - "**.js"
-      - "**.xml"
-      - "**.properties"
+      # 任意のディレクトリ階層の下にある src/main/以下の指定した拡張子のみを対象にする
+      - "**/src/main/**/*.java"
+      - "**/src/main/**/*.html"
+      - "**/src/main/**/*.css"
+      - "**/src/main/**/*.js"
+      - "**/src/main/**/*.xml"
+      - "**/src/main/**/*.properties"
 
 jobs:
   gpt-review:
