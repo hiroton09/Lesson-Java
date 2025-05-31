@@ -7,8 +7,13 @@ permissions:
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-    # paths:
-    #   - "**.java"
+    paths:
+      - "**.java"
+      - "**.html"
+      - "**.css"
+      - "**.js"
+      - "**.xml"
+      - "**.properties"
 
 jobs:
   gpt-review:
