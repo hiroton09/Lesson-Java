@@ -15,19 +15,19 @@
 				<h2 class="text-center">タイマー</h2>
 				<div class="card-body">
 					<div class="bg-light border p-3 d-flex justify-content-center">
-						<input type="number" min="0" max="59" placeholder="0"/><span>：</span>
-						<input type="number" min="0" max="59" placeholder="0"/><span>：</span>
-						<input type="number" min="0" max="59" placeholder="0"/>
+						<input id="timerDisplayTextHH" th:value="${timerDisplayTextHH}" type="number" min="0" max="59"/><span>：</span>
+						<input id="timerDisplayTextMM" th:value="${timerDisplayTextMM}" type="number" min="0" max="59"/><span>：</span>
+						<input id="timerDisplayTextSS" th:value="${timerDisplayTextSS}" type="number" min="0" max="59"/>
 					</div>
 					<div class="d-flex justify-content-between mt-4">
-						<button class="btn btn-outline-info col-3">1分</button>
-						<button class="btn btn-outline-info col-3">5分</button>
-						<button class="btn btn-outline-info col-3">10分</button>
+						<button id="minute1Btn" class="btn btn-outline-info col-3">1分</button>
+						<button id="minute5Btn" class="btn btn-outline-info col-3">5分</button>
+						<button id="minute10Btn" class="btn btn-outline-info col-3">10分</button>
 					</div>
 					<div class="d-flex justify-content-between mt-4">
-						<button class="btn btn-primary col-3">開始</button>
-						<button class="btn btn-danger col-3">停止</button>
-						<button class="btn btn-outline-danger col-3">リセット</button>
+						<button id="timerStartBtn" class="btn btn-primary col-3">開始</button>
+						<button id="timerStopBtn" class="btn btn-danger col-3">停止</button>
+						<button id="timerResetBtn" class="btn btn-outline-danger col-3">リセット</button>
 					</div>
 				</div>
 			</div>
@@ -36,11 +36,11 @@
 			<div class="card">
 				<h2 class="text-center">ストップウォッチ</h2>
 				<div class="card-body">
-					<div class="bg-light border p-3 text-right">0</div>
+					<div id="swDisplayText" th:text="${swDisplayText}" class="bg-light border p-3 text-right"></div>
 					<div class="d-flex justify-content-between mt-4">
-						<button class="btn btn-primary col-3">開始</button>
-						<button class="btn btn-danger col-3">停止</button>
-						<button class="btn btn-outline-danger col-3">リセット</button>
+						<button id="swStartBtn" class="btn btn-primary col-3">開始</button>
+						<button id="swStopBtn" class="btn btn-danger col-3">停止</button>
+						<button id="swResetBtn" class="btn btn-outline-danger col-3">リセット</button>
 					</div>
 				</div>
 			</div>
