@@ -12,8 +12,8 @@
 	<h2 class="text-center">単位変換ツール</h2>
 	<div class="d-flex justify-content-around mt-4">
 		<input id="inputNumber" type="number" min="0" class="col-5"/>
-		<select class="form-select col-5">
-			<option value=""></option>
+		<select id="unitSelect" class="form-select col-5">
+			<option value="0"></option>
 			<option th:each="unit : ${unitSummary}"
 				th:value="${unit.unitId}"
 				th:text="${unit.unitName}"
@@ -30,16 +30,19 @@
 				</tr>
 			</thead>
 			<tbody id="unitDetailBody" class="table-group-divider">
-				<tr>
-					<td>1</td>
-					<td>Mark</td>
-				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+		var appData = {
+			unitSummary: /*[[${unitSummary}]]*/ []
+		};
+	/*]]>*/
+</script>
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
