@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.template.repository.UnitRepository">
+
+	<resultMap type="com.example.template.entity.UnitSummaryEntity" id="unitSummary">
+		<id property="unitId" column="unit_id"/>
+		<result property="unitName" column="unit_name"/>
+		<collection property="unitDetailList" ofType="com.example.template.entity.UnitDetailEntity">
+			<id property="unitDetailId" column="unit_detail_id"/>
+			<result property="unitDetailName" column="unit_detail_name"/>
+			<result property="unitDetailValue" column="unit_detail_value"/>
+		</collection>
+	</resultMap>
+	
+	<!-- ********** 単位テーブル、単位詳細テーブルを取得 ********** -->
+	<select id="getUnitSummary" resultMap="unitSummary">
+		SELECT 
+			unit.unit_id,
+			unit_name,
+			unit_detail_id,
+			unit_detail_name,
+			unit_detail_value
+		FROM
+			unit
+		LEFT JOIN
+			unit_detail
+		ON
+			unit.unit_id = unit_detail.unit_id
+		ORDER BY
+			unit.unit_id ASC,
+			unit_detail_value DESC 
+	</select>
+</mapper>
