@@ -8,9 +8,18 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-
+<div class="container text-center">
+	<h2>QRコードジェネレーター</h2>
+	<div class="d-flex justify-content-around mt-4">
+		<input id="inputText" type="text" class="col-8" placeholder="QRコードにする文字を入力してください"/>
+		<button id="genQrBtn" class="btn btn-primary col-2">生成</button>
+	</div>
+	<div id="qrDisplay" class="mt-4 d-flex justify-content-center"></div>
+	<a id="downloadBtn" download="qrcode.png" class="btn btn-primary col-3 mt-4" style="display: none;">QRコードをダウンロード</a>
+</div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/qrcode.js}"></script>
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
