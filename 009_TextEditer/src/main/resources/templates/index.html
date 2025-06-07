@@ -6,11 +6,38 @@
 <title>テキストエディタ</title>
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
 </head>
 <body>
+	<div class="container">
+		<h2>テキストエディタ</h2>
 
+		<!-- メッセージ表示 -->
+		<div id="message" class="mt-4 mb-4"></div>
+
+		<!-- ファイル操作 -->
+		<div class="mt-4 mb-4">
+			<div class="d-flex justify-content-between">
+				<select id="fileList" class="form-control col-9">
+					<option value="">ファイルを選択してください</optio>
+				</select>
+				<button id="openFileButton" class="btn btn-info col-2">ファイルを開く</button>
+			</div>
+			<div class="d-flex justify-content-between mt-4">
+				<button id="saveAsButton" class="btn btn-outline-primary col-2">名前を付けて保存</button>
+				<button id="saveButton" class="btn btn-outline-primary col-2">上書き保存</button>
+				<button id="createNewButton" class="btn btn-outline-primary col-2">新規作成</button>
+				<button id="closeButton" class="btn btn-outline-secondary col-2">閉じる</button>
+				<button id="deleteButton" class="btn btn-outline-danger col-2">削除</button>
+			</div>
+		</div>
+		
+		<!-- エディタ -->
+		<div id="editor-container"></div>
+	</div>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
